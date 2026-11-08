@@ -1,0 +1,2774 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  
+  <!-- Primary Meta Tags -->
+  <title>Happy Diwali Gang! 🪔 | Interactive 3D Experience by Extreme</title>
+  <meta name="title" content="Happy Diwali Gang! 🪔 | Interactive 3D Experience by Extreme" />
+  <meta name="description" content="An interactive 3D WebGL Diwali celebration featuring all 10 GC legends: Neel, Shivam, Payal, Aarushi, Nikhil, Navya, Vinay, Ram, Pramod & Extreme! 3D Sky, Roasts, Puja Mandap, Mithai Box & Rangoli." />
+  <meta name="theme-color" content="#070312" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Happy Diwali Gang! 🪔 | Extreme's Special 3D GC Drop" />
+  <meta property="og:description" content="Subha-subha GC ke sabhi namoonon ke liye 3D Diwali duniya: 3D Fireworks, Roasts, Laxmi Puja, Shahi Mithai & Rangoli! Tap to open." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Extreme747/GC-diwali/main/preview.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Happy Diwali Gang! 🪔 | Interactive 3D Experience" />
+  <meta property="twitter:description" content="Subha-subha GC ke sabhi namoonon ke liye 3D Diwali duniya: 3D Fireworks, Roasts, Laxmi Puja, Shahi Mithai & Rangoli! Tap to open." />
+
+  <!-- Favicon (SVG Clay Diya Data URI) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 36 C8 54 22 60 32 60 C42 60 56 54 56 36 C46 42 18 42 8 36 Z' fill='%23d97706' stroke='%23facc15' stroke-width='2'/%3E%3Cpath d='M32 6 C38 18 40 26 32 34 C24 26 26 18 32 6 Z' fill='%23facc15'/%3E%3Cpath d='M32 14 C35 22 36 27 32 32 C28 27 29 22 32 14 Z' fill='%23ffffff'/%3E%3C/svg%3E" />
+
+  <!-- External Libraries (CDNs with robust fallbacks) -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Festive Classical & Clean Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Cinzel Decorative"', 'serif'],
+            serif: ['"Cinzel"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
+          },
+          colors: {
+            royal: {
+              950: '#070312',
+              900: '#100726',
+              850: '#150a32',
+              800: '#1c0d3d',
+              700: '#2d165e'
+            },
+            gold: {
+              100: '#fefce8',
+              200: '#fef08a',
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207'
+            },
+            marigold: {
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --gold-glow: 0 0 25px rgba(250, 204, 21, 0.45);
+      --flame-glow: 0 0 40px rgba(249, 115, 22, 0.8), 0 0 80px rgba(250, 204, 21, 0.5);
+    }
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #070312;
+      color: #fefce8;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    .font-festive {
+      font-family: 'Cinzel Decorative', serif;
+    }
+    .font-serif-festive {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Luxury Glassmorphism & Gold Foil Trim */
+    .luxury-glass {
+      background: linear-gradient(145deg, rgba(28, 13, 61, 0.82), rgba(10, 4, 24, 0.92));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(250, 204, 21, 0.32);
+      box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(254, 240, 138, 0.22);
+    }
+    .luxury-glass-gold {
+      background: linear-gradient(145deg, rgba(66, 32, 6, 0.78), rgba(24, 10, 42, 0.92));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid rgba(250, 204, 21, 0.6);
+      box-shadow: 0 16px 44px -6px rgba(234, 179, 8, 0.3), inset 0 1px 0 rgba(254, 240, 138, 0.4);
+    }
+
+    /* Metallic Gold Text Gradient */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef08a 25%, #facc15 50%, #f97316 80%, #fde047 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Animated Gold Shimmer Border */
+    @keyframes goldBorderShimmer {
+      0% { border-color: rgba(250, 204, 21, 0.3); box-shadow: 0 0 15px rgba(250, 204, 21, 0.2); }
+      50% { border-color: rgba(250, 204, 21, 0.8); box-shadow: 0 0 30px rgba(250, 204, 21, 0.5); }
+      100% { border-color: rgba(250, 204, 21, 0.3); box-shadow: 0 0 15px rgba(250, 204, 21, 0.2); }
+    }
+    .shimmer-gold-box {
+      animation: goldBorderShimmer 3.2s infinite ease-in-out;
+    }
+
+    /* Realistic Diya Flame Flicker */
+    @keyframes flicker {
+      0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.96; }
+      20% { transform: scale(1.08, 0.94) rotate(1.8deg); opacity: 1; }
+      40% { transform: scale(0.93, 1.09) rotate(-2.2deg); opacity: 0.92; }
+      60% { transform: scale(1.05, 1.02) rotate(1deg); opacity: 1; }
+      80% { transform: scale(0.98, 0.97) rotate(-0.5deg); opacity: 0.95; }
+    }
+    @keyframes pulseHalo {
+      0%, 100% { transform: scale(1); opacity: 0.55; }
+      50% { transform: scale(1.22); opacity: 0.9; }
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes bellSwing {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(24deg); }
+      40% { transform: rotate(-20deg); }
+      60% { transform: rotate(14deg); }
+      80% { transform: rotate(-7deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes aartiOrbit {
+      0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+    }
+    @keyframes toranSway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1.2deg) translateY(2px); }
+    }
+    @keyframes incenseCurl {
+      0% { transform: translateY(0) scaleX(1); opacity: 0.7; }
+      50% { transform: translateY(-24px) scaleX(1.4) translateX(4px); opacity: 0.4; }
+      100% { transform: translateY(-50px) scaleX(1.8) translateX(-6px); opacity: 0; }
+    }
+
+    .flame-anim {
+      animation: flicker 1.7s infinite ease-in-out;
+      transform-origin: bottom center;
+    }
+    .halo-anim {
+      animation: pulseHalo 2.2s infinite ease-in-out;
+    }
+    .float-anim {
+      animation: floatSlow 3.8s infinite ease-in-out;
+    }
+    .bell-ringing {
+      animation: bellSwing 0.95s ease-in-out;
+      transform-origin: top center;
+    }
+    .aarti-spinning {
+      animation: aartiOrbit 2.4s linear infinite;
+    }
+    .toran-swaying {
+      animation: toranSway 5s ease-in-out infinite;
+      transform-origin: top center;
+    }
+    .smoke-rising {
+      animation: incenseCurl 3s infinite linear;
+    }
+
+    /* 3D Card Flip Perspective */
+    .card-3d-wrapper {
+      perspective: 1200px;
+    }
+    .card-3d-inner {
+      position: relative;
+      width: 100%;
+      min-height: 350px;
+      transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+    .card-3d-wrapper.is-flipped .card-3d-inner {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1.25rem;
+    }
+    .card-face-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Reduced motion override */
+    .reduced-motion *,
+    .reduced-motion .flame-anim,
+    .reduced-motion .float-anim,
+    .reduced-motion .halo-anim,
+    .reduced-motion .card-3d-inner,
+    .reduced-motion .toran-swaying {
+      animation-duration: 0.001s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.05s !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070312;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ca8a04;
+      border-radius: 3px;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- FIXED 3D WEBGL SKY CANVAS BACKGROUND -->
+  <div id="canvas-container" class="fixed inset-0 z-0 pointer-events-auto overflow-hidden">
+    <canvas id="diwali-3d-canvas" class="w-full h-full block cursor-pointer" aria-label="Interactive 3D Diwali Night Sky - Tap anywhere for fireworks"></canvas>
+  </div>
+
+  <!-- FIXED 2D SPARKLE & PHULJHARI OVERLAY CANVAS -->
+  <canvas id="sparkler-canvas" class="fixed inset-0 z-20 pointer-events-none w-full h-full"></canvas>
+
+  <!-- INTERACTIVE MOON EASTER EGG TARGET -->
+  <button
+    id="moon-easter-btn"
+    type="button"
+    aria-label="Festive Crescent Moon - Tap 5 times for a secret surprise"
+    class="fixed top-16 right-4 sm:top-20 sm:right-8 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center group focus:outline-none transition-transform active:scale-90"
+    title="Hmm... this moon looks suspiciously tappable 🌙"
+  >
+    <div class="absolute inset-0 rounded-full bg-amber-300/20 blur-xl group-hover:bg-amber-300/40 transition-all halo-anim"></div>
+    <svg viewBox="0 0 100 100" class="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-[0_0_18px_rgba(254,240,138,0.9)] transition-transform duration-300 group-hover:rotate-12">
+      <defs>
+        <radialGradient id="moonGrad" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#fffbeb"/>
+          <stop offset="50%" stop-color="#fde047"/>
+          <stop offset="100%" stop-color="#ca8a04"/>
+        </radialGradient>
+      </defs>
+      <path d="M68 15C44 19 28 40 31 64C34 84 52 96 72 93C50 99 26 86 19 63C12 39 26 14 50 8C56 6 63 9 68 15Z" fill="url(#moonGrad)"/>
+      <circle cx="58" cy="30" r="2.2" fill="#fffbeb" opacity="0.9"/>
+      <circle cx="72" cy="46" r="1.5" fill="#fffbeb" opacity="0.7"/>
+    </svg>
+    <span id="moon-tap-badge" class="hidden absolute -bottom-1 right-0 bg-amber-500 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded-full shadow-lg">1/5</span>
+  </button>
+
+  <!-- CINEMATIC OPENING SCREEN OVERLAY -->
+  <div id="opening-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-between p-6 sm:p-10 bg-gradient-to-b from-[#05020d] via-[#0e0524] to-[#060210] transition-opacity duration-1000 overflow-y-auto">
+    <!-- Auspicious Hanging Toran Garland Banner -->
+    <div class="w-full max-w-lg flex flex-col items-center text-center pt-2 toran-swaying">
+      <div class="flex items-center justify-center gap-1.5 text-base sm:text-lg mb-2">
+        <span>🌼</span><span>🍃</span><span>🌺</span><span>🍃</span><span>🌼</span><span>🍃</span><span>🌺</span><span>🍃</span><span>🌼</span>
+      </div>
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-3">
+        <span>✨ Official GC Diwali Drop • Crafted by Extreme ✨</span>
+      </div>
+      <h1 class="font-festive text-2xl sm:text-4xl font-bold gold-gradient-text tracking-wide leading-tight">
+        Shubh Deepavali, Legends
+      </h1>
+      <p class="text-xs sm:text-sm text-amber-100/75 mt-1.5 max-w-md">
+        Neel • Shivam • Payal • Aarushi • Nikhil • Navya • Vinay • Ram • Pramod • Extreme
+      </p>
+    </div>
+
+    <!-- Center Interactive 3D-Styled Clay Diya to Tap -->
+    <div class="relative flex flex-col items-center my-auto py-4">
+      <!-- Radial Glow (intensifies on ignition) -->
+      <div id="intro-diya-halo" class="w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-amber-500/10 blur-3xl absolute -z-10 transition-all duration-1000"></div>
+
+      <button
+        id="ignite-opening-btn"
+        type="button"
+        class="group relative flex flex-col items-center justify-center p-6 rounded-full focus:outline-none transition-transform duration-300 active:scale-95"
+        aria-label="Tap the Diya to light it and enter the 3D Diwali Experience"
+      >
+        <!-- Outer decorative mandala ring -->
+        <div class="absolute inset-0 rounded-full border border-dashed border-amber-400/35 animate-[spin_22s_linear_infinite]"></div>
+        <div class="absolute inset-3 rounded-full border border-amber-500/20"></div>
+
+        <!-- SVG Clay Diya with Ignitable Flame -->
+        <div class="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full overflow-visible">
+            <defs>
+              <radialGradient id="flameOuter" cx="50%" cy="65%" r="55%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="30%" stop-color="#fde047"/>
+                <stop offset="68%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="clayBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d97706"/>
+                <stop offset="50%" stop-color="#9a3412"/>
+                <stop offset="100%" stop-color="#451a03"/>
+              </linearGradient>
+              <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ca8a04"/>
+                <stop offset="50%" stop-color="#fef08a"/>
+                <stop offset="100%" stop-color="#eab308"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Unlit Wick Spark Hint -->
+            <circle id="intro-wick-spark" cx="100" cy="82" r="5" fill="#fb923c" class="halo-anim" />
+
+            <!-- Flame Group (Initially scaled to 0, scales to 1 on tap) -->
+            <g id="intro-flame-group" class="transition-all duration-700 origin-[100px_86px]" style="transform: scale(0); opacity: 0;">
+              <ellipse cx="100" cy="60" rx="28" ry="42" fill="url(#flameOuter)" opacity="0.55" class="halo-anim"/>
+              <path d="M100 20 C115 45, 122 68, 100 88 C78 68, 85 45, 100 20 Z" fill="url(#flameOuter)" class="flame-anim"/>
+              <path d="M100 42 C108 58, 110 72, 100 86 C90 72, 92 58, 100 42 Z" fill="#fef9c3" class="flame-anim"/>
+            </g>
+
+            <!-- Cotton Wick -->
+            <path d="M96 96 Q100 84 102 80" stroke="#fef3c7" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+            <!-- Oil Pool -->
+            <ellipse cx="100" cy="105" rx="54" ry="15" fill="#78350f"/>
+            <ellipse cx="100" cy="106" rx="48" ry="12" fill="#b45309" opacity="0.8"/>
+
+            <!-- Ornate Clay Diya Bowl -->
+            <path d="M35 104 C35 152, 70 172, 100 172 C130 172, 165 152, 165 104 C145 118, 55 118, 35 104 Z" fill="url(#clayBody)" stroke="url(#goldTrim)" stroke-width="2.5"/>
+            <!-- Gold Carvings on Diya -->
+            <path d="M48 122 Q100 142 152 122" stroke="url(#goldTrim)" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+            <circle cx="100" cy="145" r="5" fill="#fde047"/>
+            <circle cx="75" cy="140" r="3.5" fill="#facc15"/>
+            <circle cx="125" cy="140" r="3.5" fill="#facc15"/>
+            <!-- Diya Base -->
+            <ellipse cx="100" cy="173" rx="34" ry="7" fill="url(#goldTrim)"/>
+          </svg>
+        </div>
+
+        <span id="intro-cta-pill" class="mt-4 inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500 text-slate-950 font-extrabold text-sm sm:text-base shadow-[0_0_35px_rgba(250,204,21,0.65)] group-hover:scale-105 transition-transform">
+          <span>🪔 Tap Diya to Light &amp; Enter</span>
+        </span>
+      </button>
+
+      <p id="intro-subtext" class="text-amber-200/80 text-xs sm:text-sm text-center mt-4 max-w-xs">
+        Andhera hatao, roasts aur blessings unlock karo! (Audio is synthesized &amp; stays muted until you toggle it on 🔊)
+      </p>
+    </div>
+
+    <!-- Quick Audio Choice on Opening -->
+    <div class="w-full max-w-md flex items-center justify-center gap-4 pb-2">
+      <button
+        id="intro-sound-opt-btn"
+        type="button"
+        class="text-xs text-amber-300/90 hover:text-amber-200 underline underline-offset-4 py-1.5 px-3 rounded-lg bg-white/5 border border-white/10"
+      >
+        🔇 Sound is Off (Tap to enable festive audio effects)
+      </button>
+    </div>
+  </div>
+
+  <!-- TOP STICKY NAVIGATION & CONTROLS BAR -->
+  <header class="sticky top-0 z-40 w-full px-3 sm:px-6 py-2.5 bg-[#070312]/85 backdrop-blur-md border-b border-amber-400/20">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+      <!-- Brand / Title -->
+      <div class="flex items-center gap-2">
+        <button
+          id="replay-intro-btn"
+          type="button"
+          title="Replay Opening Diya Animation"
+          class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-lg hover:bg-amber-500/25 active:scale-95 transition"
+        >
+          🪔
+        </button>
+        <div>
+          <span class="font-festive text-sm sm:text-base font-bold gold-gradient-text block leading-none">GC DIWALI '26</span>
+          <span class="text-[10px] sm:text-xs text-amber-200/70 block">10 Legends • 3D Interactive</span>
+        </div>
+      </div>
+
+      <!-- Desktop Section Links -->
+      <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/10 text-xs font-semibold">
+        <button type="button" data-nav-target="sec-sky" class="nav-jump-btn px-3 py-1.5 rounded-full text-amber-200 hover:bg-amber-500/20 transition">🌌 3D Sky &amp; Diyas</button>
+        <button type="button" data-nav-target="sec-friends" class="nav-jump-btn px-3 py-1.5 rounded-full text-amber-200 hover:bg-amber-500/20 transition">🔥 Friends Wall (10)</button>
+        <button type="button" data-nav-target="sec-puja-mithai" class="nav-jump-btn px-3 py-1.5 rounded-full text-amber-200 hover:bg-amber-500/20 transition">🌸 Puja &amp; Mithai</button>
+        <button type="button" data-nav-target="sec-rangoli" class="nav-jump-btn px-3 py-1.5 rounded-full text-amber-200 hover:bg-amber-500/20 transition">🎨 3D Rangoli</button>
+        <button type="button" data-nav-target="sec-finale" class="nav-jump-btn px-3 py-1.5 rounded-full text-amber-200 hover:bg-amber-500/20 transition">🎆 Finale</button>
+      </nav>
+
+      <!-- Action Controls: Phuljhari Mode, Sound Toggle, Lite Mode, WhatsApp Share -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Virtual Phuljhari / Sparkler Toggle -->
+        <button
+          id="sparkler-toggle-btn"
+          type="button"
+          aria-pressed="false"
+          class="flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 transition active:scale-95"
+          title="Toggle Handheld Phuljhari (Diwali Sparkler Trail)"
+        >
+          <span>✨</span>
+          <span id="sparkler-btn-text" class="hidden sm:inline">Phuljhari</span>
+        </button>
+
+        <button
+          id="sound-toggle-btn"
+          type="button"
+          aria-pressed="false"
+          class="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-amber-500/25 border border-amber-400/30 text-amber-200 transition active:scale-95"
+          title="Toggle Festive Ambience & Interaction Sounds"
+        >
+          <span id="sound-icon">🔇</span>
+          <span id="sound-label" class="hidden sm:inline">Sound Off</span>
+        </button>
+
+        <button
+          id="motion-toggle-btn"
+          type="button"
+          aria-pressed="false"
+          class="flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-amber-500/25 border border-white/15 text-amber-100/80 transition active:scale-95"
+          title="Toggle Reduced Motion / Lite Mode"
+        >
+          <span id="motion-icon">⚡</span>
+          <span id="motion-label" class="hidden lg:inline">Full 3D</span>
+        </button>
+
+        <button
+          id="share-gc-btn"
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-md hover:brightness-110 transition active:scale-95"
+          title="Share to WhatsApp / Copy Link"
+        >
+          <span>📤</span>
+          <span>Share</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pb-28 pt-4 space-y-12 sm:space-y-16 pointer-events-none">
+
+    <!-- SECTION 1: HERO & "WHO'S OPENING THIS?" PERSONALIZED GC SELECTOR + 3D SKY CONTROLS -->
+    <section id="sec-sky" class="pt-2 pointer-events-auto">
+      <div class="luxury-glass rounded-3xl p-5 sm:p-8 relative overflow-hidden shimmer-gold-box">
+        <!-- Subtle decorative corner glow -->
+        <div class="absolute -top-16 -left-16 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="space-y-3 max-w-2xl">
+            <div class="inline-flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                🪔 Subha-Subha GC Special by Extreme
+              </span>
+              <span class="text-xs text-amber-200/75">
+                Tap sky for 3D fireworks • Tap moon 5x for secret 🌙
+              </span>
+            </div>
+
+            <h2 id="dynamic-hero-greeting" class="font-festive text-2xl sm:text-4xl lg:text-5xl font-bold gold-gradient-text leading-tight">
+              Happy Diwali, Mere Yaaron! ✨
+            </h2>
+
+            <p id="dynamic-hero-sub" class="text-sm sm:text-base text-amber-100/85 leading-relaxed">
+              Celebration toh mast chal raha hai! Since humara GC ekdum legendary hai, maine phone ke hisaab se sabke liye yeh 3D Diwali duniya banayi hai — pyar bhare wishes ke saath thoda asli roast bhi zaroori hai! 😂🔥
+            </p>
+          </div>
+
+          <!-- Quick Sky & Firework Controls -->
+          <div class="flex flex-wrap sm:flex-nowrap lg:flex-col gap-2.5 shrink-0">
+            <button
+              id="launch-firework-btn"
+              type="button"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow-[0_0_25px_rgba(250,204,21,0.4)] hover:scale-[1.02] active:scale-95 transition"
+            >
+              <span>🎇</span>
+              <span>Launch 3D Sky Shot</span>
+            </button>
+            <button
+              id="release-lantern-btn"
+              type="button"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/40 text-amber-200 font-bold text-xs sm:text-sm active:scale-95 transition"
+            >
+              <span>🏮</span>
+              <span>Release Akash Kandil (<span id="lantern-count-badge">12</span>)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- "KAUN DEKH RAHA HAI?" PERSONALIZED VIEWER PILLS (All 10 Friends Featured!) -->
+        <div class="mt-6 pt-5 border-t border-amber-400/20">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-300">
+              👇 Phone pe kaun open kar raha hai? Tap your name:
+            </span>
+            <span id="active-viewer-status" class="text-xs text-amber-200/80 font-medium">
+              Viewing as: <strong class="text-amber-300">Entire GC Gang</strong>
+            </span>
+          </div>
+          <div id="viewer-pill-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1.5">
+            <!-- Populated dynamically with all 10 friends -->
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE DIYA-LIGHTING MANDALA ("TAP TO LIGHT ANOTHER DIYA") -->
+      <div class="mt-6 luxury-glass rounded-3xl p-5 sm:p-7">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-orange-400 block">Interactive Diya Thali</span>
+            <h3 class="font-festive text-xl sm:text-2xl font-bold text-amber-200">
+              🪔 10 Diyas for 10 Legends — Tap Each Diya to Light It!
+            </h3>
+            <p class="text-xs sm:text-sm text-amber-100/75">
+              Each tap lights another friend's diya and brightens the 3D night sky. Light all 10 for a golden marigold blessing!
+            </p>
+          </div>
+          <div class="flex items-center gap-2 self-start sm:self-center">
+            <div class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-200 font-bold text-xs sm:text-sm">
+              Lit: <span id="lit-diyas-count" class="text-amber-300 font-extrabold">1</span> / 10
+            </div>
+            <button
+              id="light-next-diya-btn"
+              type="button"
+              class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm active:scale-95 transition"
+            >
+              🔥 Light Next
+            </button>
+          </div>
+        </div>
+
+        <!-- 10 Interactive Diyas Grid -->
+        <div id="diya-mandala-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE PERSONALIZED FRIENDS WALL (9 FRIEND CARDS + EXTREME HOST CARD = ALL 10 FEATURED) -->
+    <section id="sec-friends" class="pointer-events-auto scroll-mt-20">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-400/30 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2">
+            🔥 Mohabbat + Beizzati = Best Friendship
+          </div>
+          <h2 class="font-festive text-2xl sm:text-4xl font-bold gold-gradient-text">
+            The GC Friends Wall
+          </h2>
+          <p class="text-xs sm:text-sm text-amber-100/80 mt-1">
+            Tap any card to flip between their affectionate <strong class="text-amber-300">Diwali Roast</strong> and genuine <strong class="text-amber-300">Festive Wish</strong>! (9 Friends + Extreme's Host Card)
+          </p>
+        </div>
+
+        <!-- Wall Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            id="random-roast-btn"
+            type="button"
+            class="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs font-bold active:scale-95 transition"
+          >
+            🎲 Random Roast Roulette
+          </button>
+          <button
+            id="flip-all-cards-btn"
+            type="button"
+            class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-amber-100 text-xs font-bold active:scale-95 transition"
+          >
+            🔄 Flip All Cards
+          </button>
+        </div>
+      </div>
+
+      <!-- NINE INDIVIDUAL INTERACTIVE FRIEND CARDS GRID -->
+      <div id="friends-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated dynamically with the 9 friends -->
+      </div>
+
+      <!-- 10TH FEATURED MEMBER: EXTREME (THE HOST / ARCHITECT CARD) -->
+      <div id="host-extreme-card-container" class="mt-6">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: RESPECTFUL LAXMI-PUJA CORNER & INTERACTIVE MITHAI BOX -->
+    <section id="sec-puja-mithai" class="pointer-events-auto scroll-mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- 3A: LAXMI-PUJA-INSPIRED FESTIVE CORNER -->
+      <div class="luxury-glass-gold rounded-3xl p-5 sm:p-7 flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-44 h-44 bg-yellow-400/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="px-3 py-1 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-[11px] font-bold uppercase tracking-wider">
+              🙏 Shubh Labh • Sacred Corner
+            </span>
+            <span id="puja-blessing-counter" class="text-xs text-amber-300 font-semibold">
+              Pushpanjali: 0 offerings
+            </span>
+          </div>
+
+          <h3 class="font-festive text-xl sm:text-2xl font-bold gold-gradient-text">
+            Shree Laxmi-Ganesh Puja Mandap
+          </h3>
+          <p class="text-xs sm:text-sm text-amber-100/80 mt-1">
+            Ring the temple bell, offer fresh marigold petals, and perform sacred Aarti for prosperity, peace, and lifelong unity in our group.
+          </p>
+        </div>
+
+        <!-- Interactive Shrine Visual Stage -->
+        <div id="puja-stage" class="relative my-5 py-6 px-4 rounded-2xl bg-gradient-to-b from-[#2a1105]/90 via-[#190826]/95 to-[#0d0417] border border-amber-400/40 flex flex-col items-center justify-center min-h-[250px] overflow-hidden">
+          <!-- Toran Arch SVG -->
+          <div class="absolute top-0 inset-x-0 flex justify-around py-1 bg-amber-500/10 border-b border-amber-400/20 text-xs">
+            <span>🌼</span><span>🍃</span><span>🌺</span><span>🍃</span><span>🌼</span><span>🍃</span><span>🌺</span><span>🍃</span><span>🌼</span>
+          </div>
+
+          <!-- Incense Stick (Agarbatti) on Altar -->
+          <div class="absolute bottom-4 left-4 flex flex-col items-center pointer-events-none">
+            <div class="w-1.5 h-1.5 rounded-full bg-orange-400 shadow-[0_0_8px_#f97316] halo-anim"></div>
+            <div class="w-1 h-6 bg-stone-700 rounded-t"></div>
+            <div class="text-[9px] text-amber-300/75 mt-0.5">Agarbatti</div>
+          </div>
+
+          <!-- Hanging Brass Bell (Interactive) -->
+          <button
+            id="temple-bell-btn"
+            type="button"
+            aria-label="Ring the auspicious brass temple bell"
+            class="mt-3 flex flex-col items-center group focus:outline-none"
+          >
+            <div class="w-0.5 h-4 bg-amber-400"></div>
+            <div id="bell-svg-wrap" class="w-12 h-12 flex items-center justify-center drop-shadow-[0_0_14px_rgba(250,204,21,0.75)]">
+              <svg viewBox="0 0 64 64" class="w-11 h-11">
+                <path d="M32 6 C20 6 16 18 14 36 L10 44 L54 44 L50 36 C48 18 44 6 32 6 Z" fill="#facc15" stroke="#fef08a" stroke-width="2"/>
+                <circle cx="32" cy="48" r="5" fill="#ea580c"/>
+              </svg>
+            </div>
+            <span class="text-[10px] text-amber-300/90 font-semibold mt-0.5 group-hover:text-amber-200">Tap Bell 🔔</span>
+          </button>
+
+          <!-- Sacred Lotus, Kalash & Shubh-Labh Emblem -->
+          <div class="relative flex items-center justify-center my-2">
+            <div id="puja-halo" class="absolute w-36 h-36 rounded-full bg-amber-400/20 blur-2xl halo-anim"></div>
+            <svg viewBox="0 0 180 120" class="w-48 h-30 relative z-10">
+              <!-- Lotus Base -->
+              <path d="M90 95 C65 95 45 78 52 60 C68 68 78 75 90 95 Z" fill="#f43f5e"/>
+              <path d="M90 95 C115 95 135 78 128 60 C112 68 102 75 90 95 Z" fill="#f43f5e"/>
+              <path d="M90 98 C72 80 72 52 90 34 C108 52 108 80 90 98 Z" fill="#fb7185" stroke="#fecdd3" stroke-width="1.5"/>
+              <!-- Sacred Kalash & Coconut -->
+              <circle cx="90" cy="68" r="18" fill="#eab308" stroke="#fef08a" stroke-width="2"/>
+              <path d="M76 52 Q90 36 104 52" fill="#15803d"/>
+              <ellipse cx="90" cy="46" rx="8" ry="10" fill="#9a3412"/>
+              <!-- Swastika / Auspicious Dot -->
+              <circle cx="90" cy="68" r="4" fill="#dc2626"/>
+              <!-- Left & Right Shubh Labh Diyas (Clickable to light!) -->
+              <g id="altar-diya-left" class="cursor-pointer" title="Tap to light left mandap diya">
+                <circle cx="32" cy="84" r="7" fill="#fde047" class="flame-anim"/>
+                <path d="M22 90 Q32 104 42 90 Z" fill="#d97706"/>
+              </g>
+              <g id="altar-diya-right" class="cursor-pointer" title="Tap to light right mandap diya">
+                <circle cx="148" cy="84" r="7" fill="#fde047" class="flame-anim"/>
+                <path d="M138 90 Q148 104 158 90 Z" fill="#d97706"/>
+              </g>
+            </svg>
+
+            <!-- Orbiting Aarti Thali Element -->
+            <div id="aarti-thali-orb" class="hidden absolute z-20 w-11 h-11 rounded-full bg-amber-400/35 border border-amber-300 flex items-center justify-center shadow-[0_0_25px_#facc15]">
+              <span class="text-xl">🪔</span>
+            </div>
+          </div>
+
+          <!-- Floating Flower Layer inside Mandap -->
+          <div id="puja-flower-layer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+          <!-- Auspicious Blessing Text -->
+          <p id="puja-mantra-text" class="text-center text-xs sm:text-sm text-amber-200 font-medium italic px-3 mt-1">
+            "ॐ महालक्ष्म्यै च विद्महे विष्णुपत्न्यै च धीमहि — May health, wealth &amp; joy bless all 10 of us!"
+          </p>
+        </div>
+
+        <!-- Puja Interactive Buttons -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <button
+            id="ring-bell-action-btn"
+            type="button"
+            class="py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 font-bold text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 active:scale-95 transition"
+          >
+            <span>🔔</span>
+            <span>Ring Ghanti</span>
+          </button>
+          <button
+            id="offer-flowers-btn"
+            type="button"
+            class="py-2.5 px-3 rounded-xl bg-orange-500/20 hover:bg-orange-500/30 border border-orange-400/40 text-orange-200 font-bold text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 active:scale-95 transition"
+          >
+            <span>🌸</span>
+            <span>Offer Flowers</span>
+          </button>
+          <button
+            id="perform-aarti-btn"
+            type="button"
+            class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold text-xs flex flex-col sm:flex-row items-center justify-center gap-1.5 active:scale-95 transition"
+          >
+            <span>🪔</span>
+            <span>Perform Aarti</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3B: INTERACTIVE MITHAI BOX (OPENS WHEN TAPPED, SWEETS POP OUT) -->
+      <div class="luxury-glass rounded-3xl p-5 sm:p-7 flex flex-col justify-between relative overflow-hidden">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="px-3 py-1 rounded-full bg-pink-500/20 border border-pink-400/40 text-pink-300 text-[11px] font-bold uppercase tracking-wider">
+              🍬 Zero Calories on Diwali
+            </span>
+            <span id="mithai-eaten-counter" class="text-xs text-amber-300 font-semibold">
+              Sweets tasted: 0
+            </span>
+          </div>
+
+          <h3 class="font-festive text-xl sm:text-2xl font-bold gold-gradient-text">
+            Interactive Shahi Mithai Box
+          </h3>
+          <p class="text-xs sm:text-sm text-amber-100/80 mt-1">
+            Tap the royal Mithai Box below to pop open the lid and grab your favorite sweets before Aarushi &amp; Nikhil finish the Kaju Katli!
+          </p>
+        </div>
+
+        <!-- MITHAI BOX STAGE -->
+        <div class="my-5 relative flex flex-col items-center justify-center min-h-[250px] rounded-2xl bg-gradient-to-b from-[#1e0b36] to-[#0c041a] border border-amber-400/30 p-4">
+
+          <!-- Closed Box View (Visible when closed) -->
+          <button
+            id="mithai-box-lid-btn"
+            type="button"
+            class="group relative w-full max-w-xs py-8 px-6 rounded-2xl bg-gradient-to-br from-rose-700 via-red-800 to-amber-900 border-2 border-amber-400 shadow-[0_10px_35px_rgba(225,29,72,0.45)] flex flex-col items-center justify-center text-center transition-all duration-500 hover:scale-[1.02] active:scale-95"
+          >
+            <div class="w-16 h-16 rounded-full bg-amber-400/20 border border-amber-300 flex items-center justify-center text-3xl mb-3 group-hover:rotate-12 transition">
+              🎁
+            </div>
+            <span class="font-festive text-lg font-bold text-amber-200 tracking-wide">
+              SHAHI KHANDANI MITHAI
+            </span>
+            <span class="text-xs text-amber-100/85 mt-1">
+              ✨ Tap to Unbox &amp; Pop the Sweets! ✨
+            </span>
+          </button>
+
+          <!-- Opened Sweets Tray -->
+          <div id="mithai-open-tray" class="hidden w-full">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-xs font-bold text-amber-300">🎉 Box Open! Tap any sweet to eat:</span>
+              <button
+                id="close-mithai-box-btn"
+                type="button"
+                class="text-[11px] text-amber-200/75 hover:text-amber-200 underline"
+              >
+                Close Lid
+              </button>
+            </div>
+            <div id="mithai-items-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Sweet Reaction Toast Banner inside Mithai Box -->
+          <div id="mithai-reaction-banner" class="mt-3 text-center text-xs text-amber-200 font-medium min-h-[1.25rem]">
+            Tap the box above to see what's inside!
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs text-amber-200/70 pt-1">
+          <span>💡 Warning: Contains 1 mandatory Soan Papdi joke</span>
+          <button
+            id="pop-all-mithai-btn"
+            type="button"
+            class="text-amber-300 font-bold hover:underline"
+          >
+            🍬 Grab Random Sweet
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE 3D-PERSPECTIVE RANGOLI STUDIO -->
+    <section id="sec-rangoli" class="pointer-events-auto scroll-mt-20">
+      <div class="luxury-glass rounded-3xl p-5 sm:p-8">
+        <div class="flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
+          <!-- Left Info & Color Palette Controls -->
+          <div class="w-full lg:w-5/12 space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+              🎨 Interactive 3D Rangoli
+            </div>
+            <h3 class="font-festive text-2xl sm:text-3xl font-bold gold-gradient-text">
+              Touch &amp; Color the Courtyard Rangoli
+            </h3>
+            <p class="text-xs sm:text-sm text-amber-100/80 leading-relaxed">
+              Pick a festive Gulal pigment below and tap the rings of the mandala to paint your custom 3D-tilted Diwali Rangoli, or hit <strong class="text-amber-300">Magic Auto-Fill</strong>!
+            </p>
+
+            <!-- Color Swatches -->
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-300 block mb-2">
+                Select Gulal Color:
+              </span>
+              <div id="rangoli-palette" class="flex flex-wrap items-center gap-2.5">
+                <!-- Swatches rendered by JS -->
+              </div>
+            </div>
+
+            <!-- Rangoli Actions -->
+            <div class="flex flex-wrap items-center gap-2.5 pt-2">
+              <button
+                id="rangoli-magic-btn"
+                type="button"
+                class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold text-xs sm:text-sm active:scale-95 transition"
+              >
+                ✨ Magic Rainbow Fill
+              </button>
+              <button
+                id="rangoli-tilt-btn"
+                type="button"
+                class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-amber-400/30 text-amber-200 font-bold text-xs sm:text-sm active:scale-95 transition"
+              >
+                🔄 Toggle 3D Tilt &amp; Spin
+              </button>
+              <button
+                id="rangoli-reset-btn"
+                type="button"
+                class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/15 text-amber-100/75 text-xs font-semibold active:scale-95 transition"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Interactive 3D SVG Rangoli Mandala -->
+          <div class="w-full lg:w-7/12 flex flex-col items-center justify-center">
+            <div
+              id="rangoli-3d-stage"
+              class="w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center transition-transform duration-700"
+              style="transform: perspective(700px) rotateX(28deg);"
+            >
+              <svg id="rangoli-svg" viewBox="0 0 300 300" class="w-full h-full drop-shadow-[0_12px_30px_rgba(250,204,21,0.35)] cursor-pointer select-none">
+                <!-- Outer Scalloped Lotus Border (Ring 1) -->
+                <g id="rangoli-ring-outer" data-ring="0" fill="#ea580c" stroke="#fef08a" stroke-width="2">
+                  <circle cx="150" cy="150" r="138" />
+                </g>
+                <!-- 12 Outer Lotus Petals (Ring 2) -->
+                <g id="rangoli-ring-petals-1" data-ring="1" fill="#e11d48" stroke="#fde047" stroke-width="1.8">
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(30 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(60 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(90 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(120 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(150 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(180 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(210 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(240 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(270 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(300 150 150)"/>
+                  <path d="M150 16 C168 48 168 85 150 150 C132 85 132 48 150 16 Z" transform="rotate(330 150 150)"/>
+                </g>
+                <!-- Middle Star Geometric Ring (Ring 3) -->
+                <g id="rangoli-ring-star" data-ring="2" fill="#7c3aed" stroke="#fef08a" stroke-width="2">
+                  <rect x="78" y="78" width="144" height="144" rx="14" />
+                  <rect x="78" y="78" width="144" height="144" rx="14" transform="rotate(45 150 150)" />
+                </g>
+                <!-- Inner Marigold Petals (Ring 4) -->
+                <g id="rangoli-ring-petals-2" data-ring="3" fill="#facc15" stroke="#78350f" stroke-width="1.8">
+                  <circle cx="150" cy="150" r="76" />
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(45 150 150)"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(90 150 150)"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(135 150 150)"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(180 150 150)"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(225 150 150)"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(270 150 150)"/>
+                  <path d="M150 76 C164 102 164 126 150 150 C136 126 136 102 150 76 Z" fill="#10b981" transform="rotate(315 150 150)"/>
+                </g>
+                <!-- Center Diya Medallion (Ring 5) -->
+                <g id="rangoli-ring-center" data-ring="4" fill="#ec4899" stroke="#fef9c3" stroke-width="2.5">
+                  <circle cx="150" cy="150" r="36" />
+                  <circle cx="150" cy="150" r="14" fill="#fef08a" />
+                </g>
+              </svg>
+            </div>
+            <span class="text-xs text-amber-200/75 mt-2">
+              👆 Tap any ring or petal on the Rangoli to splash your selected color!
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: GRAND SURPRISE FINALE BUTTON & GROUP MESSAGE -->
+    <section id="sec-finale" class="pointer-events-auto scroll-mt-20">
+      <div class="luxury-glass-gold rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden shimmer-gold-box">
+        <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-purple-600/10 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto space-y-5">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold uppercase tracking-widest">
+            🎇 The Ultimate GC Finale
+          </span>
+
+          <h2 class="font-festive text-2xl sm:text-4xl font-bold gold-gradient-text">
+            Ready for the Grand Patakha Show?
+          </h2>
+
+          <p class="text-xs sm:text-base text-amber-100/85">
+            Ek button jo aasman mein 100+ fireworks phodega aur humare GC ka official Diwali sach reveal karega!
+          </p>
+
+          <div class="pt-2">
+            <button
+              id="surprise-finale-btn"
+              type="button"
+              class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white font-extrabold text-base sm:text-lg shadow-[0_0_40px_rgba(249,115,22,0.65)] hover:scale-105 active:scale-95 transition-all"
+            >
+              <span class="text-2xl group-hover:rotate-12 transition">🎆</span>
+              <span>TAP FOR SURPRISE FINALE!</span>
+              <span class="text-2xl group-hover:-rotate-12 transition">❤️</span>
+            </button>
+          </div>
+
+          <!-- Inline Group Quote Reveal Box -->
+          <div id="inline-finale-reveal" class="hidden mt-6 p-6 rounded-2xl bg-slate-950/80 border-2 border-amber-400 shadow-[0_0_35px_rgba(250,204,21,0.35)] transition-all">
+            <p class="font-festive text-lg sm:text-2xl text-amber-200 font-bold leading-relaxed">
+              "Different personalities, questionable decisions, unlimited chaos — but one legendary gang. Happy Diwali, you idiots. ❤️"
+            </p>
+            <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-amber-300">
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">⚡ Extreme</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Neel</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Shivam</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Payal</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Aarushi</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Nikhil</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Navya</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Vinay</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Ram</span>
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/20">🪔 Pramod</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MOBILE-FIRST FLOATING BOTTOM NAVIGATION DOCK -->
+  <nav aria-label="Mobile Quick Navigation" class="md:hidden fixed bottom-3 inset-x-3 z-30 luxury-glass rounded-2xl p-1.5 flex items-center justify-around shadow-2xl">
+    <button type="button" data-nav-target="sec-sky" class="nav-jump-btn flex flex-col items-center py-1.5 px-2.5 rounded-xl text-amber-200 active:bg-amber-500/25">
+      <span class="text-base">🌌</span>
+      <span class="text-[10px] font-bold mt-0.5">3D Sky</span>
+    </button>
+    <button type="button" data-nav-target="sec-friends" class="nav-jump-btn flex flex-col items-center py-1.5 px-2.5 rounded-xl text-amber-200 active:bg-amber-500/25">
+      <span class="text-base">🔥</span>
+      <span class="text-[10px] font-bold mt-0.5">Roasts (10)</span>
+    </button>
+    <button type="button" data-nav-target="sec-puja-mithai" class="nav-jump-btn flex flex-col items-center py-1.5 px-2.5 rounded-xl text-amber-200 active:bg-amber-500/25">
+      <span class="text-base">🍬</span>
+      <span class="text-[10px] font-bold mt-0.5">Puja &amp; Box</span>
+    </button>
+    <button type="button" data-nav-target="sec-rangoli" class="nav-jump-btn flex flex-col items-center py-1.5 px-2.5 rounded-xl text-amber-200 active:bg-amber-500/25">
+      <span class="text-base">🎨</span>
+      <span class="text-[10px] font-bold mt-0.5">Rangoli</span>
+    </button>
+    <button type="button" data-nav-target="sec-finale" class="nav-jump-btn flex flex-col items-center py-1.5 px-2.5 rounded-xl text-amber-300 bg-amber-500/15 active:bg-amber-500/30">
+      <span class="text-base">🎆</span>
+      <span class="text-[10px] font-extrabold mt-0.5">Finale</span>
+    </button>
+  </nav>
+
+  <!-- GRAND FINALE & EASTER EGG MODAL OVERLAY -->
+  <div id="finale-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="luxury-glass-gold rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center relative border-2 border-amber-400 shadow-[0_0_60px_rgba(250,204,21,0.55)]">
+      <button
+        id="close-finale-modal-btn"
+        type="button"
+        aria-label="Close modal"
+        class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-amber-200 font-bold"
+      >
+        ✕
+      </button>
+
+      <div id="modal-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold uppercase mb-3">
+        🎇 Official GC Diwali Finale
+      </div>
+
+      <h3 id="modal-title" class="font-festive text-2xl sm:text-3xl font-bold gold-gradient-text mb-4">
+        One Legendary Gang ❤️
+      </h3>
+
+      <blockquote id="modal-quote" class="text-base sm:text-xl font-bold text-amber-100 leading-relaxed bg-slate-950/75 p-5 rounded-2xl border border-amber-400/40 shadow-inner">
+        "Different personalities, questionable decisions, unlimited chaos — but one legendary gang. Happy Diwali, you idiots. ❤️"
+      </blockquote>
+
+      <p id="modal-subtext" class="text-xs sm:text-sm text-amber-200/85 mt-4">
+        From Extreme to Neel, Shivam, Payal, Aarushi, Nikhil, Navya, Vinay, Ram &amp; Pramod — may our group chat stay unhinged and blessed forever!
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <button
+          id="modal-more-fireworks-btn"
+          type="button"
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold text-xs sm:text-sm active:scale-95 transition"
+        >
+          🎇 Fire 10 More Sky Shots!
+        </button>
+        <button
+          id="modal-whatsapp-share-btn"
+          type="button"
+          class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm active:scale-95 transition flex items-center gap-1.5 shadow"
+        >
+          <span>💬</span>
+          <span>Share in WhatsApp GC</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATION -->
+  <div
+    id="toast-banner"
+    class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-3 transition-all duration-300 px-4 py-2.5 rounded-2xl bg-slate-950/95 border border-amber-400 text-amber-200 text-xs sm:text-sm font-bold shadow-[0_10px_30px_rgba(0,0,0,0.85)] flex items-center gap-2 max-w-[92vw] text-center"
+  >
+    <span id="toast-text">✨ Happy Diwali!</span>
+  </div>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ==========================================
+      // 1. DATA: ALL 10 FRIENDS (9 WALL CARDS + EXTREME HOST CARD)
+      // ==========================================
+      const FRIENDS_DATA = [
+        {
+          id: 'neel',
+          name: 'Neel',
+          role: 'The "5 Min Mein Pahunch Raha Hu" Icon',
+          emoji: '🛵',
+          accent: 'from-amber-500/30 to-orange-600/20',
+          roast: 'Neel bhai ka "bas raste mein hu" aur Diwali ki Soan Papdi — dono kabhi sahi time pe sahi jagah nahi pahunchte! GC mein sabse pehle plan banayega aur aakhri moment pe khud gayab milega.',
+          wish: 'May your Wi-Fi be fast, your excuses be fewer, and your life shine brighter than a thousand Phuljharis. Happy Diwali, mere bhai! 🪔✨',
+          personalGreeting: 'Arre Neel bhai! Time pe kaise open kar liya link? 😂 Chalo apna roast padho!'
+        },
+        {
+          id: 'shivam',
+          name: 'Shivam',
+          role: 'CEO of 2 AM Bakchodi & Meme Spam',
+          emoji: '⚡',
+          accent: 'from-purple-500/30 to-indigo-600/20',
+          roast: 'Shivam ke phone ki battery hamesha 9% rehti hai par GC mein bakchodi 200%! Diwali ki safai mein ghar walon ne iske dimaag ke khurafati ideas abhi tak bahar nahi fenke, wahi sabse bada chamatkar hai.',
+          wish: 'Wishing you zero stress, massive wins, peaceful sleep, and a bank balance that glows brighter than Laxmi Ji’s blessings. Happy Diwali, Shivam! 🚀🪔',
+          personalGreeting: 'Aur Shivam bhai! Phone charge pe laga ke baith, aaj tera full roast hai! ⚡'
+        },
+        {
+          id: 'payal',
+          name: 'Payal',
+          role: 'Glam Queen & Certified Drama Director',
+          emoji: '👑',
+          accent: 'from-pink-500/30 to-rose-600/20',
+          roast: 'Payal ko ethnic outfit mein ready hone mein jitna time lagta hai, utne mein 3 Diwali nikal jaye! 400 photos khichwa ke bolegi "ek bhi acchi nahi aayi" aur 2 minute baad wahi DP lagayegi.',
+          wish: 'Keep shining like the brightest chandelier in the room! May this year bring you aesthetic candid moments, pure joy, and endless reasons to smile. Happy Diwali, Payal! ✨🌸',
+          personalGreeting: 'Welcome Payal! Pehle batao aaj kitni photos click karwayi? 📸✨'
+        },
+        {
+          id: 'aarushi',
+          name: 'Aarushi',
+          role: 'Sweet Face, Sutli Bomb Roaster',
+          emoji: '🧨',
+          accent: 'from-rose-500/30 to-amber-600/20',
+          roast: 'Dikhti bholi phuljhari jaisi hai, par muh kholte hi seedha sutli bomb! Aarushi ka "haan dekhte hai" matlab 100% plan cancel samjho. Kaju Katli chhupa ke rakhna warna akele saaf kar jayegi.',
+          wish: 'May your smile always outshine every diya, and may your year ahead be packed with crazy adventures, laughter, and unlimited Kaju Katli. Happy Diwali, Aarushi! 💖🪔',
+          personalGreeting: 'Hiii Aarushi! Kaju Katli ka dabba side rakh ke apna card flip karo! 🍬😂'
+        },
+        {
+          id: 'nikhil',
+          name: 'Nikhil',
+          role: 'Silent Assassin & VIP Jugaad Master',
+          emoji: '🕶️',
+          accent: 'from-emerald-500/30 to-teal-600/20',
+          roast: 'Nikhil GC mein pura hafta silent rahega, par jaise hi kisi ki taang khinchni ho ya free ki party dikhe — sabse pehle online aayega! Asli underground mastermind.',
+          wish: 'To the brother who always has our backs when it truly matters — may this Diwali unlock big dreams, smooth roads, and unstoppable success for you. Happy Diwali, Nikhil! 🔥🎆',
+          personalGreeting: 'Oho Nikhil bhai online! Aaj silent lurker nahi chalega, apna card dekho! 🕶️'
+        },
+        {
+          id: 'navya',
+          name: 'Navya',
+          role: 'Vibe Curator & Breaking News Anchor',
+          emoji: '🌼',
+          accent: 'from-fuchsia-500/30 to-purple-600/20',
+          roast: 'Navya ke paas duniya bhar ki breaking tea hoti hai par khud ka phone hamesha DND pe! "Mujhe drama bilkul pasand nahi" bolke GC mein sabse pehle popcorn leke baithegi.',
+          wish: 'May your vibe stay unmatched, your aesthetics stay golden, and your heart stay as warm and chaotic as ever. Wishing you the happiest, brightest Diwali, Navya! 🌼✨',
+          personalGreeting: 'Hey Navya! Popcorn ready rakh, aaj poore GC ki class lagi hai! 🍿✨'
+        },
+        {
+          id: 'vinay',
+          name: 'Vinay',
+          role: 'The "Kal Se Pakka Serious" Guru',
+          emoji: '🎯',
+          accent: 'from-cyan-500/30 to-blue-600/20',
+          roast: 'Vinay ka "bhai kal se diet aur serious life shuru" pichle teen Diwali se chal raha hai! Zameen Chakri ki tarah ghoomta bahut hai par rukta wahi hai jahan doston ki mehfil aur mithai ho.',
+          wish: 'May all your big plans take off like a sky-high rocket this year! Wishing you great health, solid wealth, and legendary memories. Happy Diwali, Vinay! 💥🪔',
+          personalGreeting: 'Kya haal Vinay bhai! Aaj diet bhool ja aur Mithai Box khol! 🍬🔥'
+        },
+        {
+          id: 'ram',
+          name: 'Ram',
+          role: 'Naam Sanskari, Kaam Full Toofani',
+          emoji: '🏹',
+          accent: 'from-orange-500/30 to-red-600/20',
+          roast: 'Naam Ram hai toh ghar walon ko lagta hai ladka ekdum seedha aur sanskari hai — unko kaun bataye ki GC ke har khatarnak kaand ke peeche isi ka dimaag hota hai!',
+          wish: 'True to your legendary name, you bring light, warmth, and loyalty wherever you go. May this festival bring you victory and happiness at every step. Happy Diwali, Ram! 🏹✨',
+          personalGreeting: 'Jai Shree Ram, mere bhai! Sanskari mask utaro aur apna GC roast padho! 😂🏹'
+        },
+        {
+          id: 'pramod',
+          name: 'Pramod',
+          role: 'Heavy Driver & Unfiltered Ladi Patakha',
+          emoji: '🎇',
+          accent: 'from-yellow-500/30 to-amber-600/20',
+          roast: 'Pramod bhai bina filter ke bolta hai — Diwali ka rocket seedha aasman mein jaye na jaye, iske one-liners seedha nishane pe lagte hai! Group ka asli 1000-wala Ladi Patakha.',
+          wish: 'Never lose that contagious energy and golden heart, bhai! May your Diwali be loud, prosperous, and full of blockbuster wins. Happy Diwali, Pramod! 🎇❤️',
+          personalGreeting: 'Pramod bhai in the house! Full आवाज mein patakhe phodte hai aaj! 🎇🔥'
+        }
+      ];
+
+      const HOST_EXTREME = {
+        id: 'extreme',
+        name: 'Extreme',
+        role: 'GC Architect • Host & Supreme Chaos Commander (Me)',
+        emoji: '👑',
+        roast: 'Subha-subha uth ke tum 9 namoonon ke liye mobile-first 3D website banayi hai — isse bada saboot kya chahiye ki meri zindagi mein tum logon ki kitni (zyada) value hai?! Ab chupchap GC mein meri tareef karo! 😎🔥',
+        wish: 'Grateful for every crazy memory, late-night bakchodi, and non-stop laughter with this gang. Here’s to lighting up a hundred more Diwalis together! — Yours truly, Extreme ⚡🪔',
+        personalGreeting: 'Boss Mode Activated! Extreme, your custom 3D GC Diwali world is live and ready to rock! ⚡🪔'
+      };
+
+      const ALL_TEN_MEMBERS = [...FRIENDS_DATA, HOST_EXTREME];
+
+      const MITHAI_ITEMS = [
+        {
+          id: 'kaju',
+          name: 'Silver Kaju Katli',
+          emoji: '💎',
+          tag: 'VIP Tier',
+          msg: 'Aarushi & Payal ki favorite Kaju Katli! Asli chandi ka vark laga hai, jaldi khao! 😋'
+        },
+        {
+          id: 'ladoo',
+          name: 'Motichoor Ladoo',
+          emoji: '🟠',
+          tag: 'Shubh Shagun',
+          msg: 'Ghee ke Motichoor Ladoo! Muh meetha karo, aaj calories count karna paap hai! 🎉'
+        },
+        {
+          id: 'gulab',
+          name: 'Hot Gulab Jamun',
+          emoji: '🍯',
+          tag: 'Melt-in-Mouth',
+          msg: 'Garam-garam Gulab Jamun — Neel ke excuses se bhi zyada soft! 😂🍮'
+        },
+        {
+          id: 'pista',
+          name: 'Shahi Pista Barfi',
+          emoji: '💚',
+          tag: 'Royal Rich',
+          msg: 'Pista Barfi! Amir doston wali vibe unlocked. Shivam aur Nikhil se bacha ke rakhna! ✨'
+        },
+        {
+          id: 'jalebi',
+          name: 'Crispy Kesar Jalebi',
+          emoji: '🥨',
+          tag: 'Garama Garam',
+          msg: 'Humare GC ki baaton jaisi tedhi-medhi par ekdum meethi Kesar Jalebi! 🔥'
+        },
+        {
+          id: 'soan',
+          name: 'Legendary Soan Papdi',
+          emoji: '📦',
+          tag: 'Since 2019',
+          msg: 'ALERT: Yeh Soan Papdi ka dabba 7 ghar ghoom ke humare GC mein aaya hai! Forward to Ram & Pramod! 🤣'
+        }
+      ];
+
+      const RANGOLI_COLORS = [
+        { name: 'Kumkum Red', hex: '#e11d48' },
+        { name: 'Haldi Gold', hex: '#facc15' },
+        { name: 'Marigold Orange', hex: '#f97316' },
+        { name: 'Peacock Blue', hex: '#0ea5e9' },
+        { name: 'Rani Pink', hex: '#ec4899' },
+        { name: 'Emerald Green', hex: '#10b981' },
+        { name: 'Royal Violet', hex: '#8b5cf6' },
+        { name: 'Ivory White', hex: '#fef9c3' }
+      ];
+
+      // ==========================================
+      // 2. STATE MANAGEMENT
+      // ==========================================
+      const state = {
+        soundEnabled: false,
+        reducedMotion: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        openingCompleted: false,
+        activeViewer: 'all',
+        litDiyas: new Set(['extreme']),
+        flippedCards: new Set(),
+        patakhaCounts: {},
+        pujaOfferings: 0,
+        aartiActive: false,
+        mithaiOpen: false,
+        mithaiEaten: 0,
+        selectedRangoliColor: '#facc15',
+        rangoliSpinning: false,
+        moonTaps: 0,
+        lanternCount: 12,
+        sparklerMode: false
+      };
+
+      ALL_TEN_MEMBERS.forEach(m => { state.patakhaCounts[m.id] = Math.floor(Math.random() * 5) + 3; });
+
+      // ==========================================
+      // 3. SYNTHESIZED WEB AUDIO ENGINE (ZERO EXTERNAL ASSETS)
+      // ==========================================
+      let audioCtx = null;
+      let ambientInterval = null;
+
+      function ensureAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+          }
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+
+      function playChime(freq = 528, duration = 0.7, type = 'sine', vol = 0.12) {
+        if (!state.soundEnabled) return;
+        try {
+          ensureAudioContext();
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.01, now + duration);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(vol, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + duration);
+        } catch (e) {}
+      }
+
+      function playTempleBellSound() {
+        if (!state.soundEnabled) return;
+        playChime(587.33, 1.8, 'sine', 0.16);
+        playChime(1174.66, 1.4, 'triangle', 0.09);
+        playChime(1760.0, 0.9, 'sine', 0.05);
+      }
+
+      function playPhuljhariSizzle() {
+        if (!state.soundEnabled) return;
+        try {
+          ensureAudioContext();
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+          const bufferSize = audioCtx.sampleRate * 0.08;
+          const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.15;
+          }
+          const noise = audioCtx.createBufferSource();
+          noise.buffer = buffer;
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'highpass';
+          filter.frequency.setValueAtTime(4500, now);
+          const gain = audioCtx.createGain();
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(audioCtx.destination);
+          noise.start(now);
+        } catch (e) {}
+      }
+
+      function playFireworkSound() {
+        if (!state.soundEnabled) return;
+        try {
+          ensureAudioContext();
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+          playChime(440 + Math.random() * 300, 0.35, 'sine', 0.07);
+
+          const bufferSize = audioCtx.sampleRate * 0.28;
+          const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+          }
+          const noise = audioCtx.createBufferSource();
+          noise.buffer = buffer;
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(900 + Math.random() * 600, now);
+          const gain = audioCtx.createGain();
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(audioCtx.destination);
+          noise.start(now);
+        } catch (e) {}
+      }
+
+      function playSwarmandalGlissando() {
+        if (!state.soundEnabled) return;
+        const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 1046.50];
+        notes.forEach((n, idx) => {
+          setTimeout(() => playChime(n, 0.85, 'triangle', 0.08), idx * 55);
+        });
+      }
+
+      function startAmbientDrone() {
+        stopAmbientDrone();
+        if (!state.soundEnabled) return;
+        const scale = [261.63, 329.63, 392.00, 523.25, 659.25];
+        ambientInterval = setInterval(() => {
+          if (!state.soundEnabled || document.hidden) return;
+          const note = scale[Math.floor(Math.random() * scale.length)];
+          playChime(note, 2.2, 'sine', 0.025);
+        }, 2800);
+      }
+
+      function stopAmbientDrone() {
+        if (ambientInterval) {
+          clearInterval(ambientInterval);
+          ambientInterval = null;
+        }
+      }
+
+      function toggleSound(forceState) {
+        state.soundEnabled = typeof forceState === 'boolean' ? forceState : !state.soundEnabled;
+        const soundBtn = document.getElementById('sound-toggle-btn');
+        const soundIcon = document.getElementById('sound-icon');
+        const soundLabel = document.getElementById('sound-label');
+        const introSoundBtn = document.getElementById('intro-sound-opt-btn');
+
+        if (state.soundEnabled) {
+          ensureAudioContext();
+          soundBtn?.setAttribute('aria-pressed', 'true');
+          if (soundIcon) soundIcon.textContent = '🔊';
+          if (soundLabel) soundLabel.textContent = 'Sound On';
+          if (introSoundBtn) introSoundBtn.textContent = '🔊 Festive Sound Enabled (Tap to mute)';
+          playSwarmandalGlissando();
+          startAmbientDrone();
+          showToast('🔊 Festive sitar chimes & patakha audio ON!');
+        } else {
+          soundBtn?.setAttribute('aria-pressed', 'false');
+          if (soundIcon) soundIcon.textContent = '🔇';
+          if (soundLabel) soundLabel.textContent = 'Sound Off';
+          if (introSoundBtn) introSoundBtn.textContent = '🔇 Sound is Off (Tap to enable festive audio effects)';
+          stopAmbientDrone();
+          showToast('🔇 Audio muted');
+        }
+      }
+
+      // ==========================================
+      // 4. TOAST NOTIFICATION HELPER
+      // ==========================================
+      let toastTimer = null;
+      function showToast(message) {
+        const banner = document.getElementById('toast-banner');
+        const text = document.getElementById('toast-text');
+        if (!banner || !text) return;
+        text.textContent = message;
+        banner.classList.remove('opacity-0', '-translate-y-3');
+        banner.classList.add('opacity-100', 'translate-y-0');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          banner.classList.remove('opacity-100', 'translate-y-0');
+          banner.classList.add('opacity-0', '-translate-y-3');
+        }, 3200);
+      }
+
+      // Confetti helper (with canvas-confetti library or local particle fallback)
+      function triggerConfettiBurst(xRatio = 0.5, yRatio = 0.5) {
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: state.reducedMotion ? 25 : 60,
+            spread: 70,
+            origin: { x: xRatio, y: yRatio },
+            colors: ['#facc15', '#f97316', '#ec4899', '#38bdf8', '#4ade80', '#ffffff']
+          });
+        }
+      }
+
+      // ==========================================
+      // 5. THREE.JS 3D DIWALI ENVIRONMENT & FIREWORKS
+      // ==========================================
+      let scene, camera, renderer, animFrameId;
+      const floatingDiyas = [];
+      const floatingLanterns = [];
+      const fireworkParticles = [];
+      let marigoldPoints = null;
+      let ambientLight3D = null;
+      let mainPointLight3D = null;
+      let targetCameraX = 0;
+      let targetCameraY = 2;
+
+      function createDiyaMesh3D() {
+        const group = new THREE.Group();
+        const bowlGeo = new THREE.ConeGeometry(0.65, 0.45, 16);
+        bowlGeo.rotateX(Math.PI);
+        const bowlMat = new THREE.MeshStandardMaterial({
+          color: 0xb45309,
+          roughness: 0.5,
+          metalness: 0.3
+        });
+        const bowl = new THREE.Mesh(bowlGeo, bowlMat);
+        group.add(bowl);
+
+        const rimGeo = new THREE.TorusGeometry(0.64, 0.06, 8, 24);
+        rimGeo.rotateX(Math.PI / 2);
+        rimGeo.translate(0, 0.2, 0);
+        const rimMat = new THREE.MeshStandardMaterial({
+          color: 0xfacc15,
+          roughness: 0.2,
+          metalness: 0.85,
+          emissive: 0xca8a04,
+          emissiveIntensity: 0.3
+        });
+        const rim = new THREE.Mesh(rimGeo, rimMat);
+        group.add(rim);
+
+        const flameGeo = new THREE.ConeGeometry(0.22, 0.58, 12);
+        flameGeo.translate(0, 0.48, 0);
+        const flameMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+        const flame = new THREE.Mesh(flameGeo, flameMat);
+        group.add(flame);
+
+        const haloGeo = new THREE.SphereGeometry(0.38, 12, 12);
+        haloGeo.translate(0, 0.42, 0);
+        const haloMat = new THREE.MeshBasicMaterial({
+          color: 0xf97316,
+          transparent: true,
+          opacity: 0.45
+        });
+        const halo = new THREE.Mesh(haloGeo, haloMat);
+        group.add(halo);
+
+        group.userData = {
+          flame,
+          halo,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.6 + Math.random() * 0.6,
+          baseY: 0
+        };
+        return group;
+      }
+
+      function createLanternMesh3D(colorHex) {
+        const group = new THREE.Group();
+        const bodyGeo = new THREE.CylinderGeometry(0.45, 0.32, 0.95, 8);
+        const bodyMat = new THREE.MeshStandardMaterial({
+          color: colorHex,
+          emissive: colorHex,
+          emissiveIntensity: 0.65,
+          roughness: 0.3,
+          transparent: true,
+          opacity: 0.92
+        });
+        const body = new THREE.Mesh(bodyGeo, bodyMat);
+        group.add(body);
+
+        const ringGeo = new THREE.TorusGeometry(0.42, 0.04, 6, 12);
+        ringGeo.rotateX(Math.PI / 2);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0xfde047 });
+        const topRing = new THREE.Mesh(ringGeo, ringMat);
+        topRing.position.y = 0.48;
+        group.add(topRing);
+
+        group.userData = {
+          vy: 0.012 + Math.random() * 0.018,
+          swayPhase: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.015
+        };
+        return group;
+      }
+
+      function spawn3DFirework(worldX, worldY, worldZ) {
+        if (!scene) return;
+        playFireworkSound();
+        const palette = [0xfacc15, 0xf97316, 0xec4899, 0x38bdf8, 0xa855f7, 0x4ade80, 0xfef08a, 0xffffff];
+        const color = palette[Math.floor(Math.random() * palette.length)];
+        const count = state.reducedMotion ? 24 : 64;
+
+        const positions = new Float32Array(count * 3);
+        const velocities = [];
+
+        for (let i = 0; i < count; i++) {
+          positions[i * 3] = worldX;
+          positions[i * 3 + 1] = worldY;
+          positions[i * 3 + 2] = worldZ;
+
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.acos(2 * Math.random() - 1);
+          const speed = 0.08 + Math.random() * 0.24;
+          velocities.push({
+            vx: Math.sin(phi) * Math.cos(theta) * speed,
+            vy: Math.sin(phi) * Math.sin(theta) * speed,
+            vz: Math.cos(phi) * speed
+          });
+        }
+
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const mat = new THREE.PointsMaterial({
+          color: color,
+          size: 0.44,
+          transparent: true,
+          opacity: 1,
+          blending: THREE.AdditiveBlending
+        });
+
+        const points = new THREE.Points(geo, mat);
+        scene.add(points);
+        fireworkParticles.push({
+          points,
+          velocities,
+          age: 0,
+          maxAge: state.reducedMotion ? 35 : 70
+        });
+      }
+
+      function spawnSingleLantern3D() {
+        if (!scene) return;
+        const lanternColors = [0xf97316, 0xeab308, 0xec4899, 0xef4444, 0xa855f7];
+        const col = lanternColors[Math.floor(Math.random() * lanternColors.length)];
+        const lantern = createLanternMesh3D(col);
+        lantern.position.set(
+          (Math.random() - 0.5) * 26,
+          -8 + Math.random() * 4,
+          -6 - Math.random() * 14
+        );
+        scene.add(lantern);
+        floatingLanterns.push(lantern);
+      }
+
+      function init3DScene() {
+        const canvas = document.getElementById('diwali-3d-canvas');
+        if (!canvas || typeof THREE === 'undefined') return;
+
+        try {
+          scene = new THREE.Scene();
+          scene.fog = new THREE.FogExp2(0x070312, 0.026);
+
+          camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 120);
+          camera.position.set(0, 2, 13);
+
+          renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: window.devicePixelRatio < 2,
+            alpha: true,
+            powerPreference: 'high-performance'
+          });
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+          // Ambient & Dynamic Point Lights
+          ambientLight3D = new THREE.AmbientLight(0xffedd5, 0.7);
+          scene.add(ambientLight3D);
+
+          mainPointLight3D = new THREE.PointLight(0xf97316, 2.5, 36);
+          mainPointLight3D.position.set(0, 4, 6);
+          scene.add(mainPointLight3D);
+
+          const rimLight = new THREE.DirectionalLight(0xfde047, 0.95);
+          rimLight.position.set(-8, 12, -5);
+          scene.add(rimLight);
+
+          // 10 Floating 3D Diyas in an arc
+          for (let i = 0; i < 10; i++) {
+            const diya = createDiyaMesh3D();
+            const angle = (i / 10) * Math.PI * 2;
+            const radius = 5.5 + (i % 2) * 2.2;
+            diya.position.set(
+              Math.cos(angle) * radius,
+              -2.5 + (i % 3) * 1.4,
+              Math.sin(angle) * radius - 3
+            );
+            diya.userData.baseY = diya.position.y;
+            scene.add(diya);
+            floatingDiyas.push(diya);
+          }
+
+          // 12 Floating Akash Kandils (Sky Lanterns)
+          const lanternColors = [0xf97316, 0xeab308, 0xec4899, 0xef4444, 0xa855f7];
+          for (let i = 0; i < 12; i++) {
+            const col = lanternColors[i % lanternColors.length];
+            const lantern = createLanternMesh3D(col);
+            lantern.position.set(
+              (Math.random() - 0.5) * 26,
+              (Math.random() - 0.3) * 18,
+              -5 - Math.random() * 14
+            );
+            scene.add(lantern);
+            floatingLanterns.push(lantern);
+          }
+
+          // Floating Sparkle Dust & Marigold Petals
+          const petalCount = 220;
+          const petalPositions = new Float32Array(petalCount * 3);
+          for (let i = 0; i < petalCount; i++) {
+            petalPositions[i * 3] = (Math.random() - 0.5) * 34;
+            petalPositions[i * 3 + 1] = (Math.random() - 0.5) * 26;
+            petalPositions[i * 3 + 2] = (Math.random() - 0.5) * 22;
+          }
+          const petalGeo = new THREE.BufferGeometry();
+          petalGeo.setAttribute('position', new THREE.BufferAttribute(petalPositions, 3));
+          const petalMat = new THREE.PointsMaterial({
+            color: 0xfacc15,
+            size: 0.24,
+            transparent: true,
+            opacity: 0.75
+          });
+          marigoldPoints = new THREE.Points(petalGeo, petalMat);
+          scene.add(marigoldPoints);
+
+          // Tap on Canvas for 3D Fireworks
+          canvas.addEventListener('pointerdown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            const ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            const worldX = ndcX * 10;
+            const worldY = ndcY * 6 + 2;
+            const worldZ = -2 - Math.random() * 6;
+            spawn3DFirework(worldX, worldY, worldZ);
+          });
+
+          // Parallax camera movement
+          window.addEventListener('pointermove', (e) => {
+            if (state.reducedMotion) return;
+            const nx = (e.clientX / window.innerWidth) - 0.5;
+            const ny = (e.clientY / window.innerHeight) - 0.5;
+            targetCameraX = nx * 2.2;
+            targetCameraY = 2 - ny * 1.2;
+          });
+
+          window.addEventListener('resize', () => {
+            if (!camera || !renderer) return;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+          });
+
+          animate3D(0);
+        } catch (err) {
+          canvas.style.background = 'radial-gradient(circle at 50% 25%, #2d165e 0%, #100726 55%, #070312 100%)';
+        }
+      }
+
+      function animate3D(timestamp) {
+        animFrameId = requestAnimationFrame(animate3D);
+        if (!renderer || !scene || !camera) return;
+
+        const t = timestamp * 0.001;
+
+        if (!state.reducedMotion) {
+          camera.position.x += (targetCameraX - camera.position.x) * 0.04;
+          camera.position.y += (targetCameraY - camera.position.y) * 0.04;
+          camera.lookAt(0, 1, 0);
+
+          floatingDiyas.forEach((diya, idx) => {
+            const u = diya.userData;
+            diya.position.y = u.baseY + Math.sin(t * u.speed + u.phase) * 0.35;
+            diya.rotation.y += 0.005;
+            const scalePulse = 0.92 + Math.sin(t * 7 + idx) * 0.12;
+            u.flame.scale.set(1, scalePulse, 1);
+          });
+
+          floatingLanterns.forEach((l) => {
+            l.position.y += l.userData.vy;
+            l.position.x += Math.sin(t + l.userData.swayPhase) * 0.008;
+            l.rotation.y += l.userData.rotSpeed;
+            if (l.position.y > 14) {
+              l.position.y = -10;
+            }
+          });
+
+          if (marigoldPoints) {
+            marigoldPoints.rotation.y = t * 0.04;
+          }
+        }
+
+        for (let i = fireworkParticles.length - 1; i >= 0; i--) {
+          const fw = fireworkParticles[i];
+          fw.age++;
+          const posAttr = fw.points.geometry.getAttribute('position');
+          for (let j = 0; j < fw.velocities.length; j++) {
+            const v = fw.velocities[j];
+            posAttr.array[j * 3] += v.vx;
+            posAttr.array[j * 3 + 1] += v.vy;
+            posAttr.array[j * 3 + 2] += v.vz;
+            v.vy -= 0.0025;
+          }
+          posAttr.needsUpdate = true;
+          fw.points.material.opacity = Math.max(0, 1 - fw.age / fw.maxAge);
+
+          if (fw.age >= fw.maxAge) {
+            scene.remove(fw.points);
+            fw.points.geometry.dispose();
+            fw.points.material.dispose();
+            fireworkParticles.splice(i, 1);
+          }
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      // ==========================================
+      // 5B. 2D SPARKLE & PHULJHARI CURSOR TRAIL ENGINE
+      // ==========================================
+      const sparklerSparks = [];
+      const sparklerCanvas = document.getElementById('sparkler-canvas');
+      const sCtx = sparklerCanvas ? sparklerCanvas.getContext('2d') : null;
+
+      function resizeSparklerCanvas() {
+        if (!sparklerCanvas) return;
+        sparklerCanvas.width = window.innerWidth;
+        sparklerCanvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeSparklerCanvas);
+      resizeSparklerCanvas();
+
+      function addSparklerSpark(x, y, count = 3) {
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 4 + 1.5;
+          sparklerSparks.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed + 0.6,
+            life: 1.0,
+            decay: 0.025 + Math.random() * 0.04,
+            size: Math.random() * 3.5 + 1.5,
+            color: Math.random() > 0.4 ? '#facc15' : (Math.random() > 0.5 ? '#f97316' : '#ffffff')
+          });
+        }
+      }
+
+      let lastSparkTime = 0;
+      function handlePointerTrail(e) {
+        if (!state.sparklerMode) return;
+        const now = performance.now();
+        if (now - lastSparkTime > 28) {
+          lastSparkTime = now;
+          const x = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+          const y = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+          addSparklerSpark(x, y, 4);
+          if (Math.random() > 0.7) playPhuljhariSizzle();
+        }
+      }
+      window.addEventListener('pointermove', handlePointerTrail);
+      window.addEventListener('touchmove', handlePointerTrail);
+
+      function loopSparklerCanvas() {
+        requestAnimationFrame(loopSparklerCanvas);
+        if (!sCtx || !sparklerCanvas) return;
+
+        sCtx.clearRect(0, 0, sparklerCanvas.width, sparklerCanvas.height);
+
+        for (let i = sparklerSparks.length - 1; i >= 0; i--) {
+          const s = sparklerSparks[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.vy += 0.08; // gravity
+          s.life -= s.decay;
+
+          if (s.life <= 0) {
+            sparklerSparks.splice(i, 1);
+            continue;
+          }
+
+          sCtx.save();
+          sCtx.globalAlpha = s.life;
+          sCtx.fillStyle = s.color;
+          sCtx.shadowColor = s.color;
+          sCtx.shadowBlur = 8;
+          sCtx.beginPath();
+          sCtx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+          sCtx.fill();
+          sCtx.restore();
+        }
+      }
+      loopSparklerCanvas();
+
+      // ==========================================
+      // 6. RENDER UI COMPONENTS
+      // ==========================================
+
+      // 6A. Render "Who's Opening This?" Viewer Pills
+      function renderViewerPills() {
+        const container = document.getElementById('viewer-pill-bar');
+        if (!container) return;
+
+        const allBtnHtml = `
+          <button
+            type="button"
+            data-viewer-id="all"
+            class="viewer-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition ${
+              state.activeViewer === 'all'
+                ? 'bg-amber-400 text-slate-950 shadow-[0_0_15px_rgba(250,204,21,0.5)]'
+                : 'bg-white/10 text-amber-200 hover:bg-white/20 border border-white/15'
+            }"
+          >
+            🎉 Entire GC (10)
+          </button>
+        `;
+
+        const memberPillsHtml = ALL_TEN_MEMBERS.map((m) => {
+          const active = state.activeViewer === m.id;
+          return `
+            <button
+              type="button"
+              data-viewer-id="${m.id}"
+              class="viewer-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 ${
+                active
+                  ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-[0_0_15px_rgba(250,204,21,0.5)]'
+                  : 'bg-white/10 text-amber-100 hover:bg-amber-500/20 border border-amber-400/25'
+              }"
+            >
+              <span>${m.emoji}</span>
+              <span>${m.name}${m.id === 'extreme' ? ' (Me)' : ''}</span>
+            </button>
+          `;
+        }).join('');
+
+        container.innerHTML = allBtnHtml + memberPillsHtml;
+      }
+
+      // 6B. Render 10 Interactive Diyas in the Courtyard Mandala
+      function renderDiyaMandala() {
+        const grid = document.getElementById('diya-mandala-grid');
+        const counterEl = document.getElementById('lit-diyas-count');
+        if (!grid) return;
+
+        counterEl.textContent = String(state.litDiyas.size);
+
+        grid.innerHTML = ALL_TEN_MEMBERS.map((m) => {
+          const isLit = state.litDiyas.has(m.id);
+          return `
+            <button
+              type="button"
+              data-diya-member="${m.id}"
+              aria-pressed="${isLit}"
+              class="diya-slot-btn group relative p-3 rounded-2xl border transition-all flex flex-col items-center justify-center text-center ${
+                isLit
+                  ? 'bg-gradient-to-b from-amber-500/25 to-orange-900/30 border-amber-400 shadow-[0_0_20px_rgba(250,204,21,0.3)]'
+                  : 'bg-white/5 hover:bg-white/10 border-white/15 opacity-80'
+              }"
+            >
+              <div class="relative w-12 h-12 flex items-center justify-center">
+                <svg viewBox="0 0 80 80" class="w-11 h-11 overflow-visible">
+                  <!-- Flame -->
+                  <g style="opacity: ${isLit ? 1 : 0}; transform: scale(${isLit ? 1 : 0.2}); transform-origin: 40px 36px; transition: all 0.35s ease;">
+                    <circle cx="40" cy="24" r="14" fill="#f97316" opacity="0.35" class="halo-anim"/>
+                    <path d="M40 8 C47 20 49 30 40 38 C31 30 33 20 40 8 Z" fill="#fde047" class="flame-anim"/>
+                    <path d="M40 18 C44 25 44 31 40 37 C36 31 36 25 40 18 Z" fill="#ffffff"/>
+                  </g>
+                  <!-- Diya Clay Bowl -->
+                  <path d="M14 42 C14 62 28 68 40 68 C52 68 66 62 66 42 C56 48 24 48 14 42 Z" fill="${isLit ? '#d97706' : '#57534e'}" stroke="#facc15" stroke-width="2"/>
+                </svg>
+              </div>
+              <span class="text-xs font-extrabold ${isLit ? 'text-amber-300' : 'text-amber-100/70'} mt-1">
+                ${m.name}
+              </span>
+              <span class="text-[10px] ${isLit ? 'text-orange-300' : 'text-amber-200/50'}">
+                ${isLit ? '🔥 Lit & Blessed' : 'Tap to Light'}
+              </span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      // 6C. Render the 9 Friends Wall Cards + Extreme's 10th Host Card
+      function renderFriendsWall() {
+        const grid = document.getElementById('friends-cards-grid');
+        const hostContainer = document.getElementById('host-extreme-card-container');
+        if (!grid || !hostContainer) return;
+
+        grid.innerHTML = FRIENDS_DATA.map((f, index) => {
+          const isFlipped = state.flippedCards.has(f.id);
+          const isHighlighted = state.activeViewer === f.id;
+          const count = state.patakhaCounts[f.id] || 5;
+
+          return `
+            <div
+              id="friend-card-${f.id}"
+              class="card-3d-wrapper ${isFlipped ? 'is-flipped' : ''} ${
+                isHighlighted ? 'ring-2 ring-amber-400 rounded-2xl shadow-[0_0_30px_rgba(250,204,21,0.45)]' : ''
+              }"
+            >
+              <div class="card-3d-inner">
+                <!-- FRONT FACE: FESTIVE TAROT PORTRAIT -->
+                <div
+                  data-flip-card="${f.id}"
+                  class="card-face luxury-glass p-5 flex flex-col justify-between cursor-pointer hover:border-amber-400/60 transition group"
+                >
+                  <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                      #${index + 1} • GC Legend
+                    </span>
+                    <span class="text-xs text-amber-200/75 font-semibold">
+                      💥 ${count} Patakhas
+                    </span>
+                  </div>
+
+                  <div class="my-auto py-4 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br ${f.accent} border-2 border-amber-400/60 flex items-center justify-center text-4xl shadow-[0_0_25px_rgba(250,204,21,0.25)] group-hover:scale-110 transition-transform">
+                      ${f.emoji}
+                    </div>
+                    <h3 class="font-festive text-2xl font-bold gold-gradient-text mt-3">
+                      ${f.name}
+                    </h3>
+                    <p class="text-xs text-amber-200/85 font-semibold mt-1 px-2">
+                      ${f.role}
+                    </p>
+                  </div>
+
+                  <div class="pt-3 border-t border-amber-400/20 flex items-center justify-between">
+                    <span class="text-xs font-bold text-amber-300 group-hover:translate-x-1 transition-transform">
+                      🔥 Tap to Reveal Roast &amp; Wish →
+                    </span>
+                    <span class="text-sm">🪔</span>
+                  </div>
+                </div>
+
+                <!-- BACK FACE: ROAST + HEARTFELT WISH -->
+                <div class="card-face card-face-back luxury-glass-gold p-5 flex flex-col justify-between">
+                  <div class="flex items-center justify-between border-b border-amber-400/25 pb-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-xl">${f.emoji}</span>
+                      <h4 class="font-festive text-lg font-bold text-amber-200">${f.name}</h4>
+                    </div>
+                    <button
+                      type="button"
+                      data-flip-card="${f.id}"
+                      class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold text-amber-200"
+                    >
+                      ↩ Flip Back
+                    </button>
+                  </div>
+
+                  <div class="my-auto py-2 space-y-2 text-left overflow-y-auto max-h-[220px] no-scrollbar">
+                    <div class="p-3 rounded-xl bg-rose-950/60 border border-rose-400/35">
+                      <span class="text-[10px] font-extrabold uppercase tracking-wider text-rose-300 block mb-0.5">
+                        🔥 Friendly Diwali Roast:
+                      </span>
+                      <p class="text-xs text-amber-50/95 leading-relaxed">
+                        "${f.roast}"
+                      </p>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-amber-950/60 border border-amber-400/35">
+                      <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 block mb-0.5">
+                        🪔 Genuine Festive Wish:
+                      </span>
+                      <p class="text-xs text-amber-100/95 leading-relaxed">
+                        ${f.wish}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="pt-2 border-t border-amber-400/20 flex flex-wrap items-center justify-between gap-1.5">
+                    <button
+                      type="button"
+                      data-patakha-btn="${f.id}"
+                      class="flex-1 py-1.5 px-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold text-[11px] active:scale-95 transition"
+                    >
+                      💥 Patakha (<span id="patakha-count-${f.id}">${count}</span>)
+                    </button>
+                    <button
+                      type="button"
+                      data-copy-roast-btn="${f.id}"
+                      class="py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-amber-400/30 text-amber-200 font-bold text-[11px] active:scale-95 transition"
+                      title="Copy Roast text"
+                    >
+                      📋 Copy
+                    </button>
+                    <button
+                      type="button"
+                      data-wa-roast-btn="${f.id}"
+                      class="py-1.5 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] active:scale-95 transition"
+                      title="Share to WhatsApp"
+                    >
+                      💬 WA
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Render Extreme's 10th Host Spotlight Card
+        const hostCount = state.patakhaCounts['extreme'] || 10;
+        hostContainer.innerHTML = `
+          <div id="friend-card-extreme" class="luxury-glass-gold rounded-3xl p-5 sm:p-7 border-2 border-amber-400/60 relative overflow-hidden shimmer-gold-box">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+              <div class="space-y-2 max-w-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold uppercase">
+                  👑 #10 • Extreme (Me • The Host &amp; Creator)
+                </div>
+                <h3 class="font-festive text-xl sm:text-2xl font-bold gold-gradient-text">
+                  ${HOST_EXTREME.name} — ${HOST_EXTREME.role}
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                  <div class="p-3.5 rounded-2xl bg-slate-950/65 border border-rose-400/40">
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-rose-300 block mb-1">
+                      😎 Host Self-Roast &amp; Truth:
+                    </span>
+                    <p class="text-xs text-amber-100/95 leading-relaxed">
+                      "${HOST_EXTREME.roast}"
+                    </p>
+                  </div>
+                  <div class="p-3.5 rounded-2xl bg-slate-950/65 border border-amber-400/40">
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 block mb-1">
+                      ❤️ Extreme's Wish for the Gang:
+                    </span>
+                    <p class="text-xs text-amber-100/95 leading-relaxed">
+                      ${HOST_EXTREME.wish}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap sm:flex-nowrap lg:flex-col items-center justify-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  data-patakha-btn="extreme"
+                  class="flex-1 sm:flex-none px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-400 via-yellow-300 to-orange-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg active:scale-95 transition"
+                >
+                  👑 Hype Extreme (<span id="patakha-count-extreme">${hostCount}</span>🔥)
+                </button>
+                <button
+                  type="button"
+                  data-copy-roast-btn="extreme"
+                  class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-amber-200 font-bold text-xs active:scale-95 transition"
+                >
+                  📋 Copy Host Message
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 6D. Render Mithai Box Items
+      function renderMithaiItems() {
+        const grid = document.getElementById('mithai-items-grid');
+        if (!grid) return;
+        grid.innerHTML = MITHAI_ITEMS.map((item) => `
+          <button
+            type="button"
+            data-mithai-id="${item.id}"
+            class="mithai-sweet-btn p-3 rounded-2xl bg-white/10 hover:bg-amber-500/25 border border-amber-400/35 flex flex-col items-center text-center transition transform hover:-translate-y-0.5 active:scale-90"
+          >
+            <span class="text-2xl sm:text-3xl mb-1">${item.emoji}</span>
+            <span class="text-xs font-extrabold text-amber-200 leading-tight">${item.name}</span>
+            <span class="text-[10px] text-amber-300/80 mt-0.5 px-2 py-0.5 rounded-full bg-black/30">${item.tag}</span>
+          </button>
+        `).join('');
+      }
+
+      // 6E. Render Rangoli Color Swatches
+      function renderRangoliPalette() {
+        const container = document.getElementById('rangoli-palette');
+        if (!container) return;
+        container.innerHTML = RANGOLI_COLORS.map((c) => {
+          const selected = state.selectedRangoliColor.toLowerCase() === c.hex.toLowerCase();
+          return `
+            <button
+              type="button"
+              data-rangoli-color="${c.hex}"
+              title="${c.name}"
+              aria-label="${c.name}"
+              class="w-9 h-9 rounded-full border-2 transition transform ${
+                selected ? 'scale-125 border-white shadow-[0_0_15px_rgba(255,255,255,0.8)]' : 'border-amber-200/40 hover:scale-110'
+              }"
+              style="background-color: ${c.hex};"
+            ></button>
+          `;
+        }).join('');
+      }
+
+      // ==========================================
+      // 7. INTERACTION HANDLERS
+      // ==========================================
+
+      // 7A. Opening Diya Ignition & Transition
+      function igniteOpeningDiya() {
+        if (state.openingCompleted) return;
+        state.openingCompleted = true;
+
+        const flameGroup = document.getElementById('intro-flame-group');
+        const wickSpark = document.getElementById('intro-wick-spark');
+        const halo = document.getElementById('intro-diya-halo');
+        const ctaPill = document.getElementById('intro-cta-pill');
+        const overlay = document.getElementById('opening-overlay');
+
+        if (wickSpark) wickSpark.style.display = 'none';
+        if (flameGroup) {
+          flameGroup.style.transform = 'scale(1)';
+          flameGroup.style.opacity = '1';
+        }
+        if (halo) {
+          halo.classList.remove('bg-amber-500/10');
+          halo.classList.add('bg-amber-400/50', 'scale-150');
+        }
+        if (ctaPill) {
+          ctaPill.innerHTML = '<span>✨ Shubh Deepavali! Entering 3D World... ✨</span>';
+        }
+
+        playSwarmandalGlissando();
+        triggerConfettiBurst(0.5, 0.5);
+
+        setTimeout(() => {
+          spawn3DFirework(-3, 4, -4);
+          spawn3DFirework(3, 5, -5);
+          spawn3DFirework(0, 6, -3);
+        }, 350);
+
+        setTimeout(() => {
+          if (overlay) {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+              overlay.classList.add('hidden');
+            }, 900);
+          }
+          showToast('🪔 Welcome to our 3D Diwali GC World! Tap anywhere in the sky for fireworks!');
+        }, 1050);
+      }
+
+      // 7B. Diya Lighting Interaction
+      function toggleOrLightDiya(memberId) {
+        const member = ALL_TEN_MEMBERS.find(m => m.id === memberId);
+        if (!state.litDiyas.has(memberId)) {
+          state.litDiyas.add(memberId);
+          playChime(523.25 + state.litDiyas.size * 45, 0.75, 'triangle', 0.14);
+          spawn3DFirework((Math.random() - 0.5) * 8, 3 + Math.random() * 4, -4);
+
+          if (mainPointLight3D) {
+            mainPointLight3D.intensity = 2.0 + state.litDiyas.size * 0.22;
+          }
+
+          if (state.litDiyas.size === 10) {
+            playSwarmandalGlissando();
+            triggerConfettiBurst(0.5, 0.4);
+            showToast('🌟 All 10 Gang Diyas Lit! Full illumination unlocked!');
+            for (let i = 0; i < 4; i++) {
+              setTimeout(() => spawn3DFirework((Math.random() - 0.5) * 10, 4 + Math.random() * 4, -4), i * 220);
+            }
+          } else if (member) {
+            showToast(`🪔 Lit ${member.name}'s Diya! (${state.litDiyas.size}/10 Lit)`);
+          }
+        } else {
+          playChime(659.25, 0.5, 'sine', 0.1);
+          spawn3DFirework((Math.random() - 0.5) * 6, 4, -4);
+          if (member) {
+            showToast(`✨ ${member.name}'s Diya is glowing bright!`);
+          }
+        }
+        renderDiyaMandala();
+      }
+
+      function lightNextUnlitDiya() {
+        const unlit = ALL_TEN_MEMBERS.find(m => !state.litDiyas.has(m.id));
+        if (unlit) {
+          toggleOrLightDiya(unlit.id);
+        } else {
+          playSwarmandalGlissando();
+          spawn3DFirework(0, 5, -3);
+          showToast('🔥 All 10 Diyas are already blazing bright!');
+        }
+      }
+
+      // 7C. Grand Finale & Moon Easter Egg Modal
+      function triggerSurpriseFinale(isMoonEasterEgg = false) {
+        const modal = document.getElementById('finale-modal');
+        const inlineReveal = document.getElementById('inline-finale-reveal');
+        const modalBadge = document.getElementById('modal-badge');
+        const modalTitle = document.getElementById('modal-title');
+        const modalQuote = document.getElementById('modal-quote');
+        const modalSubtext = document.getElementById('modal-subtext');
+
+        if (inlineReveal) {
+          inlineReveal.classList.remove('hidden');
+        }
+
+        if (isMoonEasterEgg) {
+          modalBadge.textContent = '🌙 Secret Moon Easter Egg Unlocked (5/5 Taps!)';
+          modalTitle.textContent = '3 AM GC Bakchodi Mode Activated! 🦉🎇';
+          modalQuote.textContent = '"Chaand pe bhi humare GC ka shor sunai deta hai! Different personalities, questionable decisions, unlimited chaos — but one legendary gang. Happy Diwali, you idiots. ❤️"';
+          modalSubtext.textContent = 'Secret Achievement Unlocked by tapping the Moon 5 times! Extreme, Neel, Shivam, Payal, Aarushi, Nikhil, Navya, Vinay, Ram & Pramod = Forever Legends.';
+        } else {
+          modalBadge.textContent = '🎇 Official GC Diwali Finale';
+          modalTitle.textContent = 'One Legendary Gang ❤️';
+          modalQuote.textContent = '"Different personalities, questionable decisions, unlimited chaos — but one legendary gang. Happy Diwali, you idiots. ❤️"';
+          modalSubtext.textContent = 'From Extreme to Neel, Shivam, Payal, Aarushi, Nikhil, Navya, Vinay, Ram & Pramod — may our group chat stay unhinged and blessed forever!';
+        }
+
+        if (modal) {
+          modal.classList.remove('hidden');
+        }
+
+        playSwarmandalGlissando();
+        triggerConfettiBurst(0.5, 0.4);
+
+        for (let i = 0; i < 8; i++) {
+          setTimeout(() => {
+            spawn3DFirework(
+              (Math.random() - 0.5) * 14,
+              2 + Math.random() * 6,
+              -2 - Math.random() * 6
+            );
+          }, i * 240);
+        }
+      }
+
+      // 7D. Native Share & WhatsApp Direct
+      async function shareExperience() {
+        const shareText = '🪔 Happy Diwali Gang! Extreme built a 3D interactive Diwali experience + personalized roasts for Neel, Shivam, Payal, Aarushi, Nikhil, Navya, Vinay, Ram & Pramod! Check your card 🔥✨\n\n"Different personalities, questionable decisions, unlimited chaos — but one legendary gang. Happy Diwali, you idiots. ❤️"\n\n';
+        const shareUrl = window.location.href;
+
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Happy Diwali Gang! 🪔 3D GC Experience',
+              text: shareText,
+              url: shareUrl
+            });
+            showToast('📤 Shared with the gang!');
+            return;
+          } catch (err) {}
+        }
+
+        const payload = `${shareText}${shareUrl}`;
+        copyTextToClipboard(payload, '📋 GC Diwali message & link copied! Paste in WhatsApp!');
+      }
+
+      function shareToWhatsAppDirect(text) {
+        const encoded = encodeURIComponent(text + '\n' + window.location.href);
+        const waUrl = `https://api.whatsapp.com/send?text=${encoded}`;
+        window.open(waUrl, '_blank');
+      }
+
+      function copyTextToClipboard(text, successMsg = '📋 Copied to clipboard!') {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            showToast(successMsg);
+          }).catch(() => {
+            fallbackCopyText(text, successMsg);
+          });
+        } else {
+          fallbackCopyText(text, successMsg);
+        }
+      }
+
+      function fallbackCopyText(text, successMsg) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast(successMsg);
+        } catch (e) {
+          showToast('✨ Message ready!');
+        }
+        document.body.removeChild(ta);
+      }
+
+      // ==========================================
+      // 8. ATTACH EVENT LISTENERS
+      // ==========================================
+      function bindEvents() {
+        // Opening screen
+        document.getElementById('ignite-opening-btn')?.addEventListener('click', igniteOpeningDiya);
+        document.getElementById('intro-sound-opt-btn')?.addEventListener('click', () => toggleSound());
+
+        document.getElementById('replay-intro-btn')?.addEventListener('click', () => {
+          state.openingCompleted = false;
+          const overlay = document.getElementById('opening-overlay');
+          const flameGroup = document.getElementById('intro-flame-group');
+          const ctaPill = document.getElementById('intro-cta-pill');
+          if (flameGroup) {
+            flameGroup.style.transform = 'scale(0)';
+            flameGroup.style.opacity = '0';
+          }
+          if (ctaPill) {
+            ctaPill.innerHTML = '<span>🪔 Tap Diya to Light &amp; Enter</span>';
+          }
+          if (overlay) {
+            overlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+          }
+        });
+
+        // Top Bar Controls
+        document.getElementById('sound-toggle-btn')?.addEventListener('click', () => toggleSound());
+
+        document.getElementById('sparkler-toggle-btn')?.addEventListener('click', () => {
+          state.sparklerMode = !state.sparklerMode;
+          const btn = document.getElementById('sparkler-toggle-btn');
+          const txt = document.getElementById('sparkler-btn-text');
+          btn?.setAttribute('aria-pressed', String(state.sparklerMode));
+          if (state.sparklerMode) {
+            btn?.classList.add('bg-amber-400', 'text-slate-950');
+            btn?.classList.remove('bg-amber-500/15', 'text-amber-300');
+            if (txt) txt.textContent = 'Sparkler ON!';
+            showToast('✨ Phuljhari ON! Move mouse or drag finger to spark!');
+            playPhuljhariSizzle();
+          } else {
+            btn?.classList.remove('bg-amber-400', 'text-slate-950');
+            btn?.classList.add('bg-amber-500/15', 'text-amber-300');
+            if (txt) txt.textContent = 'Phuljhari';
+            showToast('✨ Phuljhari OFF');
+          }
+        });
+
+        document.getElementById('motion-toggle-btn')?.addEventListener('click', () => {
+          state.reducedMotion = !state.reducedMotion;
+          document.body.classList.toggle('reduced-motion', state.reducedMotion);
+          const btn = document.getElementById('motion-toggle-btn');
+          const icon = document.getElementById('motion-icon');
+          const label = document.getElementById('motion-label');
+          btn?.setAttribute('aria-pressed', String(state.reducedMotion));
+          if (icon) icon.textContent = state.reducedMotion ? '🛡️' : '⚡';
+          if (label) label.textContent = state.reducedMotion ? 'Lite Mode' : 'Full 3D';
+          showToast(state.reducedMotion ? '🛡️ Reduced Motion / Lite Mode ON' : '⚡ Full 3D Animations ON');
+        });
+
+        document.getElementById('share-gc-btn')?.addEventListener('click', shareExperience);
+
+        // Section Navigation Links
+        document.querySelectorAll('.nav-jump-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-nav-target');
+            const el = targetId ? document.getElementById(targetId) : null;
+            if (el) {
+              el.scrollIntoView({ behavior: state.reducedMotion ? 'auto' : 'smooth' });
+            }
+          });
+        });
+
+        // Sky Shot & Akash Kandil Buttons
+        document.getElementById('launch-firework-btn')?.addEventListener('click', () => {
+          for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+              spawn3DFirework((Math.random() - 0.5) * 10, 3 + Math.random() * 5, -3 - Math.random() * 4);
+            }, i * 180);
+          }
+          showToast('🎇 Boom! 3D Sky Shots launched!');
+        });
+
+        document.getElementById('release-lantern-btn')?.addEventListener('click', () => {
+          state.lanternCount++;
+          const badge = document.getElementById('lantern-count-badge');
+          if (badge) badge.textContent = String(state.lanternCount);
+          spawnSingleLantern3D();
+          playChime(587.33, 0.7, 'sine', 0.1);
+          showToast('🏮 Released a glowing Akash Kandil into the night sky!');
+        });
+
+        // Viewer Selector Delegation
+        document.getElementById('viewer-pill-bar')?.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-viewer-id]');
+          if (!btn) return;
+          const viewerId = btn.getAttribute('data-viewer-id');
+          state.activeViewer = viewerId;
+          renderViewerPills();
+
+          const statusEl = document.getElementById('active-viewer-status');
+          const greetingEl = document.getElementById('dynamic-hero-greeting');
+          const subEl = document.getElementById('dynamic-hero-sub');
+
+          if (viewerId === 'all') {
+            if (statusEl) statusEl.innerHTML = 'Viewing as: <strong class="text-amber-300">Entire GC Gang</strong>';
+            if (greetingEl) greetingEl.textContent = 'Happy Diwali, Mere Yaaron! ✨';
+            if (subEl) subEl.textContent = 'Celebration toh mast chal raha hai! Since humara GC ekdum legendary hai, maine phone ke hisaab se sabke liye yeh 3D Diwali duniya banayi hai — pyar bhare wishes ke saath thoda asli roast bhi zaroori hai! 😂🔥';
+            renderFriendsWall();
+          } else {
+            const member = ALL_TEN_MEMBERS.find(m => m.id === viewerId);
+            if (member) {
+              if (statusEl) statusEl.innerHTML = `Viewing as: <strong class="text-amber-300">${member.emoji} ${member.name}</strong>`;
+              if (greetingEl) greetingEl.textContent = `Happy Diwali, ${member.name}! ${member.emoji}✨`;
+              if (subEl) subEl.textContent = member.personalGreeting;
+              state.litDiyas.add(member.id);
+              state.flippedCards.add(member.id);
+              renderDiyaMandala();
+              renderFriendsWall();
+              playChime(659.25, 0.6, 'triangle', 0.12);
+              const cardEl = document.getElementById(`friend-card-${member.id}`);
+              if (cardEl) {
+                setTimeout(() => cardEl.scrollIntoView({ behavior: state.reducedMotion ? 'auto' : 'smooth', block: 'center' }), 250);
+              }
+            }
+          }
+        });
+
+        // Diya Mandala Delegation
+        document.getElementById('diya-mandala-grid')?.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-diya-member]');
+          if (!btn) return;
+          const memberId = btn.getAttribute('data-diya-member');
+          if (memberId) toggleOrLightDiya(memberId);
+        });
+
+        document.getElementById('light-next-diya-btn')?.addEventListener('click', lightNextUnlitDiya);
+
+        // Friends Wall Delegation (Flip, Patakha, Copy, WhatsApp)
+        document.getElementById('sec-friends')?.addEventListener('click', (e) => {
+          // Send Patakha Button
+          const patakhaBtn = e.target.closest('[data-patakha-btn]');
+          if (patakhaBtn) {
+            e.stopPropagation();
+            const memberId = patakhaBtn.getAttribute('data-patakha-btn');
+            state.patakhaCounts[memberId] = (state.patakhaCounts[memberId] || 5) + 1;
+            const countSpan = document.getElementById(`patakha-count-${memberId}`);
+            if (countSpan) countSpan.textContent = String(state.patakhaCounts[memberId]);
+            spawn3DFirework((Math.random() - 0.5) * 8, 4, -4);
+            triggerConfettiBurst(0.5, 0.6);
+            const m = ALL_TEN_MEMBERS.find(x => x.id === memberId);
+            showToast(`💥 Sent a Sutli Bomb salute to ${m ? m.name : 'friend'}!`);
+            return;
+          }
+
+          // Copy Roast Button
+          const copyBtn = e.target.closest('[data-copy-roast-btn]');
+          if (copyBtn) {
+            e.stopPropagation();
+            const memberId = copyBtn.getAttribute('data-copy-roast-btn');
+            const m = ALL_TEN_MEMBERS.find(x => x.id === memberId);
+            if (m) {
+              const text = `🔥 GC Diwali Roast for ${m.name}: "${m.roast}"\n🪔 Festive Wish: ${m.wish}\n— From Extreme's 3D Diwali World`;
+              copyTextToClipboard(text, `📋 ${m.name}'s Roast & Wish copied!`);
+            }
+            return;
+          }
+
+          // WhatsApp Direct Button
+          const waBtn = e.target.closest('[data-wa-roast-btn]');
+          if (waBtn) {
+            e.stopPropagation();
+            const memberId = waBtn.getAttribute('data-wa-roast-btn');
+            const m = ALL_TEN_MEMBERS.find(x => x.id === memberId);
+            if (m) {
+              const text = `🔥 *Happy Diwali ${m.name}!* 🪔\n\n"${m.roast}"\n\n*Wish:* ${m.wish}\n\nCheck out the 3D Diwali GC World:`;
+              shareToWhatsAppDirect(text);
+            }
+            return;
+          }
+
+          // Flip Trigger
+          const flipTrigger = e.target.closest('[data-flip-card]');
+          if (flipTrigger) {
+            const memberId = flipTrigger.getAttribute('data-flip-card');
+            if (state.flippedCards.has(memberId)) {
+              state.flippedCards.delete(memberId);
+            } else {
+              state.flippedCards.add(memberId);
+              playChime(587.33, 0.45, 'triangle', 0.1);
+            }
+            renderFriendsWall();
+          }
+        });
+
+        // Random Roast Roulette & Flip All Cards
+        document.getElementById('random-roast-btn')?.addEventListener('click', () => {
+          const pick = FRIENDS_DATA[Math.floor(Math.random() * FRIENDS_DATA.length)];
+          state.flippedCards.add(pick.id);
+          state.activeViewer = pick.id;
+          renderViewerPills();
+          renderFriendsWall();
+          spawn3DFirework(0, 5, -4);
+          showToast(`🎲 Roast Roulette landed on ${pick.name}!`);
+          const cardEl = document.getElementById(`friend-card-${pick.id}`);
+          if (cardEl) {
+            cardEl.scrollIntoView({ behavior: state.reducedMotion ? 'auto' : 'smooth', block: 'center' });
+          }
+        });
+
+        document.getElementById('flip-all-cards-btn')?.addEventListener('click', () => {
+          if (state.flippedCards.size < FRIENDS_DATA.length) {
+            FRIENDS_DATA.forEach(f => state.flippedCards.add(f.id));
+            showToast('🔥 Revealed all 9 Friends Wall roasts & wishes!');
+          } else {
+            state.flippedCards.clear();
+            showToast('🔄 Flipped all cards back to portraits');
+          }
+          playChime(523.25, 0.5, 'sine', 0.1);
+          renderFriendsWall();
+        });
+
+        // Laxmi Puja Corner Interactions
+        function ringTempleBell() {
+          const bellWrap = document.getElementById('bell-svg-wrap');
+          if (bellWrap) {
+            bellWrap.classList.remove('bell-ringing');
+            void bellWrap.offsetWidth;
+            bellWrap.classList.add('bell-ringing');
+          }
+          playTempleBellSound();
+          showToast('🔔 Ding! Auspicious temple bell rung for the gang');
+        }
+
+        document.getElementById('temple-bell-btn')?.addEventListener('click', ringTempleBell);
+        document.getElementById('ring-bell-action-btn')?.addEventListener('click', ringTempleBell);
+
+        // Clickable Altar Diyas
+        document.getElementById('altar-diya-left')?.addEventListener('click', () => {
+          playChime(659.25, 0.6, 'sine', 0.12);
+          showToast('🪔 Shubh Labh Diya illuminated with divine light!');
+        });
+        document.getElementById('altar-diya-right')?.addEventListener('click', () => {
+          playChime(783.99, 0.6, 'sine', 0.12);
+          showToast('🪔 Sacred Mandap Diya glowing bright!');
+        });
+
+        document.getElementById('offer-flowers-btn')?.addEventListener('click', () => {
+          state.pujaOfferings++;
+          const counter = document.getElementById('puja-blessing-counter');
+          if (counter) counter.textContent = `Pushpanjali: ${state.pujaOfferings} offerings`;
+
+          const layer = document.getElementById('puja-flower-layer');
+          if (layer) {
+            const flowers = ['🌼', '🌺', '🌸', '🏵️', '✨'];
+            for (let i = 0; i < 9; i++) {
+              const span = document.createElement('span');
+              span.textContent = flowers[i % flowers.length];
+              span.className = 'absolute text-lg transition-all duration-1000 pointer-events-none';
+              span.style.left = `${15 + Math.random() * 70}%`;
+              span.style.top = '-10px';
+              layer.appendChild(span);
+              requestAnimationFrame(() => {
+                span.style.transform = `translateY(${150 + Math.random() * 60}px) rotate(${Math.random() * 180}deg)`;
+                span.style.opacity = '0';
+              });
+              setTimeout(() => span.remove(), 1050);
+            }
+          }
+          playChime(659.25, 0.7, 'sine', 0.11);
+          showToast('🌸 Offered fresh marigold & lotus petals at the mandap!');
+        });
+
+        document.getElementById('perform-aarti-btn')?.addEventListener('click', () => {
+          const orb = document.getElementById('aarti-thali-orb');
+          if (!orb) return;
+          state.aartiActive = !state.aartiActive;
+          if (state.aartiActive) {
+            orb.classList.remove('hidden');
+            orb.classList.add('aarti-spinning');
+            playSwarmandalGlissando();
+            showToast('🪔 Performing Shubh Deepavali Aarti for all 10 friends 🙏');
+          } else {
+            orb.classList.add('hidden');
+            orb.classList.remove('aarti-spinning');
+          }
+        });
+
+        // Mithai Box Interactions
+        function openMithaiBox() {
+          state.mithaiOpen = true;
+          document.getElementById('mithai-box-lid-btn')?.classList.add('hidden');
+          document.getElementById('mithai-open-tray')?.classList.remove('hidden');
+          const banner = document.getElementById('mithai-reaction-banner');
+          if (banner) banner.textContent = '✨ Shahi Mithai Box unboxed! Tap any sweet above to taste!';
+          playSwarmandalGlissando();
+          triggerConfettiBurst(0.7, 0.6);
+          spawn3DFirework(0, 4, -4);
+        }
+
+        document.getElementById('mithai-box-lid-btn')?.addEventListener('click', openMithaiBox);
+
+        document.getElementById('close-mithai-box-btn')?.addEventListener('click', () => {
+          state.mithaiOpen = false;
+          document.getElementById('mithai-open-tray')?.classList.add('hidden');
+          document.getElementById('mithai-box-lid-btn')?.classList.remove('hidden');
+          const banner = document.getElementById('mithai-reaction-banner');
+          if (banner) banner.textContent = 'Tap the box above to see what’s inside!';
+        });
+
+        function tasteMithai(sweetId) {
+          if (!state.mithaiOpen) openMithaiBox();
+          const item = MITHAI_ITEMS.find(m => m.id === sweetId) || MITHAI_ITEMS[0];
+          state.mithaiEaten++;
+          const counter = document.getElementById('mithai-eaten-counter');
+          if (counter) counter.textContent = `Sweets tasted: ${state.mithaiEaten}`;
+          const banner = document.getElementById('mithai-reaction-banner');
+          if (banner) banner.textContent = `${item.emoji} ${item.msg}`;
+          playChime(783.99, 0.45, 'triangle', 0.12);
+          showToast(`${item.emoji} ${item.name}: ${item.msg}`);
+        }
+
+        document.getElementById('mithai-items-grid')?.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-mithai-id]');
+          if (!btn) return;
+          tasteMithai(btn.getAttribute('data-mithai-id'));
+        });
+
+        document.getElementById('pop-all-mithai-btn')?.addEventListener('click', () => {
+          const randomSweet = MITHAI_ITEMS[Math.floor(Math.random() * MITHAI_ITEMS.length)];
+          tasteMithai(randomSweet.id);
+        });
+
+        // 3D Rangoli Interactions
+        document.getElementById('rangoli-palette')?.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-rangoli-color]');
+          if (!btn) return;
+          state.selectedRangoliColor = btn.getAttribute('data-rangoli-color');
+          renderRangoliPalette();
+          playChime(523.25, 0.3, 'sine', 0.08);
+        });
+
+        document.getElementById('rangoli-svg')?.addEventListener('click', (e) => {
+          const ringGroup = e.target.closest('[data-ring]');
+          if (ringGroup) {
+            ringGroup.setAttribute('fill', state.selectedRangoliColor);
+            if (e.target.tagName === 'path' || e.target.tagName === 'circle' || e.target.tagName === 'rect') {
+              e.target.setAttribute('fill', state.selectedRangoliColor);
+            }
+            playChime(587.33 + Math.random() * 200, 0.35, 'triangle', 0.1);
+          }
+        });
+
+        document.getElementById('rangoli-magic-btn')?.addEventListener('click', () => {
+          const svg = document.getElementById('rangoli-svg');
+          if (!svg) return;
+          svg.querySelectorAll('path, circle, rect').forEach((el) => {
+            const c = RANGOLI_COLORS[Math.floor(Math.random() * RANGOLI_COLORS.length)].hex;
+            el.setAttribute('fill', c);
+          });
+          playSwarmandalGlissando();
+          triggerConfettiBurst(0.5, 0.7);
+          showToast('🎨 Magic Festive Rangoli pattern generated!');
+        });
+
+        document.getElementById('rangoli-tilt-btn')?.addEventListener('click', () => {
+          state.rangoliSpinning = !state.rangoliSpinning;
+          const stage = document.getElementById('rangoli-3d-stage');
+          if (stage) {
+            stage.style.transform = state.rangoliSpinning
+              ? 'perspective(650px) rotateX(42deg) rotateZ(180deg) scale(1.04)'
+              : 'perspective(700px) rotateX(28deg) rotateZ(0deg) scale(1)';
+          }
+          showToast('🔄 Spun the 3D Courtyard Rangoli!');
+        });
+
+        document.getElementById('rangoli-reset-btn')?.addEventListener('click', () => {
+          const defaults = ['#ea580c', '#e11d48', '#7c3aed', '#facc15', '#ec4899'];
+          document.querySelectorAll('#rangoli-svg [data-ring]').forEach((g, idx) => {
+            const col = defaults[idx % defaults.length];
+            g.setAttribute('fill', col);
+            g.querySelectorAll('path, circle, rect').forEach(c => c.setAttribute('fill', col));
+          });
+          showToast('🎨 Rangoli reset to classic colors');
+        });
+
+        // Surprise Finale & Modal Buttons
+        document.getElementById('surprise-finale-btn')?.addEventListener('click', () => triggerSurpriseFinale(false));
+
+        document.getElementById('close-finale-modal-btn')?.addEventListener('click', () => {
+          document.getElementById('finale-modal')?.classList.add('hidden');
+        });
+
+        document.getElementById('modal-more-fireworks-btn')?.addEventListener('click', () => {
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+              spawn3DFirework((Math.random() - 0.5) * 14, 2 + Math.random() * 6, -3 - Math.random() * 5);
+            }, i * 160);
+          }
+          triggerConfettiBurst(0.5, 0.4);
+          showToast('🎇 10 Sky Shots fired for the gang!');
+        });
+
+        document.getElementById('modal-whatsapp-share-btn')?.addEventListener('click', () => {
+          const quote = 'Different personalities, questionable decisions, unlimited chaos — but one legendary gang. Happy Diwali, you idiots. ❤️';
+          shareToWhatsAppDirect(`🎇 *GC Diwali Finale Special* 🪔\n\n"${quote}"\n\nTo Neel, Shivam, Payal, Aarushi, Nikhil, Navya, Vinay, Ram, Pramod & Extreme! ✨`);
+        });
+
+        // Hidden Moon Easter Egg (Tap Moon 5 Times)
+        document.getElementById('moon-easter-btn')?.addEventListener('click', () => {
+          state.moonTaps++;
+          const badge = document.getElementById('moon-tap-badge');
+          if (badge) {
+            badge.classList.remove('hidden');
+            badge.textContent = `${Math.min(state.moonTaps, 5)}/5`;
+          }
+          playChime(523.25 + state.moonTaps * 95, 0.5, 'sine', 0.13);
+          spawn3DFirework(4, 5, -4);
+
+          if (state.moonTaps < 5) {
+            showToast(`🌙 Moon tapped (${state.moonTaps}/5)... Keep tapping for a secret!`);
+          } else {
+            state.moonTaps = 0;
+            if (badge) badge.textContent = '5/5 🎉';
+            triggerSurpriseFinale(true);
+          }
+        });
+      }
+
+      // ==========================================
+      // 9. INITIALIZE ON LOAD
+      // ==========================================
+      window.addEventListener('DOMContentLoaded', () => {
+        if (state.reducedMotion) {
+          document.body.classList.add('reduced-motion');
+        }
+        renderViewerPills();
+        renderDiyaMandala();
+        renderFriendsWall();
+        renderMithaiItems();
+        renderRangoliPalette();
+        bindEvents();
+        init3DScene();
+      });
+    })();
+  </script>
+</body>
+</html>

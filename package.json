@@ -1,0 +1,19 @@
+{
+  "name": "gc-diwali",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive 3D Diwali Experience for GC Gang by Extreme",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "diwali",
+    "threejs",
+    "festive",
+    "interactive",
+    "vercel"
+  ],
+  "author": "Extreme",
+  "license": "MIT"
+}
